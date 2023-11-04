@@ -1,6 +1,8 @@
 <template>
-  <div>
+  <div class="bg-white">
     <Drag />
+    <CardForOneVideo />
+    
   </div>
 </template>
 
@@ -19,10 +21,11 @@
 
 <script>
 import Drag from './Drag.vue';
-
+import CardForOneVideo from './CardForOneVideo.vue';
 export default {
   components: {
-    Drag
+    Drag,
+    CardForOneVideo
   },
 
   methods: {

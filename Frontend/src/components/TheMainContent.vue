@@ -56,7 +56,7 @@
     >
       <div class="px-5 py-3 h-full" v-if="$attrs.activeindex === 2">
         <VideoDet />
-       л
+       
       </div>
     </transition>
 
