@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import VideoDet from "../components/VideoDet.vue";
 
 const routes = [
   {
@@ -7,6 +8,7 @@ const routes = [
 
     component: () => import("../views/MainPage.vue"),
   },
+  { path: '/videodet', component: VideoDet },
   
 ];
 
