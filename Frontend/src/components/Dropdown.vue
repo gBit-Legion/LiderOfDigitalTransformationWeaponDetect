@@ -4,7 +4,7 @@
       @click="toggleDropdown"
       class="flex items-center justify-center gap-2 py-1 px-3 text-lg bg-idealBlue hover:bg-idealCian transition duration-100 text-white rounded-md"
     >
-      Список услуг
+      Какой-нибудь фильтр
       <BaseIcon name="spisok" />
     </button>
     <transition

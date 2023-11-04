@@ -16,7 +16,7 @@
           :icon="navItem.icon"
         />
       </div>
-      <Filter />
+      <!-- <Filter /> -->
     </div>
   </aside>
 </template>
@@ -50,7 +50,9 @@ export default {
       activeIndex: 0,
       navItems: [
         { label: "Карта", icon: "map" },
-        { label: "Видео", icon: "video" },
+        { label: "Загрузить список камер", icon: "spisok" },
+        { label: "Распознавание на видео", icon: "video"},
+        { label: "Ручная разметка данных", icon: "flag"}
       ],
     };
   },

@@ -4,7 +4,7 @@
       <p
         class="text-idealDarkGray flex justify-center text-center text-6xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
       >
-        UPLOAD FILE
+        ЗАГРУЗКА СПИСКА КАМЕР
       </p>
       <div class="max-w-6xl mx-auto mt-4">
         <div class="relative mb-4 flex w-full items-stretch">
