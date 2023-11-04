@@ -1,9 +1,11 @@
 <template>
   <div class="border-idealBlue border-[6px] rounded-lg shadow-cards">
-    <yandex-map @click="changeMyPos" :coords="coords" :use-object-manager="true" :object-manager-clusterize="true"
+    <yandex-map :coords="coords" :use-object-manager="true" :object-manager-clusterize="true"
       :settings="settings" :zoom="5" :cluster-options="clusterOptions">
-      <ymap-marker v-for="item in postamat_list" :key="item.id" :coords="[item.latitude, item.longitude]"
-        :markerId="item.id" :cluster-name="1" :icon="markerIconBANK" :balloon-template="balloonTemplate(item)" />
+      <ymap-marker v-for="item in camera_list" :key="item.id" :coords="[item.latitude, item.longitude]"
+        :markerId="item.id" :cluster-name="1" :icon="markerIconCAMERA" :balloon-template="balloonTemplateCamera(item)" />
+      <ymap-marker v-for="item in police_list" :key="item.id" :coords="[item.latitude, item.longitude]"
+        :markerId="item.id" :cluster-name="1" :icon="markerIconPOLICE" :balloon-template="balloonTemplatePolice(item)" />
     </yandex-map>
 
   </div>
@@ -38,13 +40,36 @@ export default {
   },
   data() {
     return {
-      postamat_list: [
+      camera_list: [
         {
           id: 1,
+          latitude: 54.84,
+          longitude: 39.84,
+          name: `Камера наблюдения`,
+          address: 'Можайка',
+        },
+        {
+          id: 2,
+          latitude: 54.85,
+          longitude: 39.85,
+          name: `Камера наблюдения`,
+          address: 'Можайка',
+        },
+        {
+          id: 3,
           latitude: 54.82896654088406,
           longitude: 39.831893822753904,
           name: `Камера наблюдения`,
           address: 'Можайка',
+        }
+      ],
+      police_list: [
+        {
+          id: 1,
+          latitude: 54.83,
+          longitude: 39.832,
+          name: `Толмас`,
+          phone: '+7(999)232-23-42',
         }
       ],
       choosed_bank: '',
@@ -66,21 +91,14 @@ export default {
       ],
       coords: [55.753215, 36.622504],
       settings: settings,
-      markerIconUSER: {
+      markerIconPOLICE: {
         layout: "default#imageWithContent",
-        imageHref: "https://cdn-icons-png.flaticon.com/128/10345/10345653.png",
-        imageSize: [40, 40],
-        imageOffset: [-20, -20],
-        contentOffset: [0, 0],
-      },
-      markerIconATM: {
-        layout: "default#imageWithContent",
-        imageHref: "https://cdn-icons-png.flaticon.com/128/6059/6059866.png",
+        imageHref: "https://cdn-icons-png.flaticon.com/128/1417/1417975.png",
         imageSize: [43, 43],
         imageOffset: [0, 0],
         contentOffset: [0, 15],
       },
-      markerIconBANK: {
+      markerIconCAMERA: {
         layout: "default#imageWithContent",
         imageHref: "https://cdn-icons-png.flaticon.com/128/5388/5388782.png",
         imageSize: [24, 24],
@@ -106,7 +124,7 @@ export default {
   },
   methods: {
     ...mapActions(['GET_MYCOORDS']),
-    balloonTemplate(item) {
+    balloonTemplateCamera(item) {
       return `
     <h1 class="text-idealBlue text-xl font-bold font-TT_Firs_Neue_Regular">${item.name
         }</h1>
@@ -116,6 +134,14 @@ export default {
         }</a>
   `;
     },
+    balloonTemplatePolice(item) {
+      return `
+    <h1 class="text-idealBlue text-xl font-bold font-TT_Firs_Neue_Regular">${item.name
+        }</h1>
+    <a class="font-semibold font-TT_Firs_Neue_Regular text-base">Номер телефона: ${item.phone
+        }</a>
+  `;
+    }
 
   },
 
