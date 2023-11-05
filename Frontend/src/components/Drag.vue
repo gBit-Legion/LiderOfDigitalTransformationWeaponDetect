@@ -1,5 +1,5 @@
 <style>
-form {
+.form {
   display: block;
   height: 400px;
   width: 140vh;
@@ -49,7 +49,7 @@ a.submit-button {
   margin-top: 20px;
 }
 
-progress {
+.progress {
   width: 400px;
   margin: auto;
   display: block;
@@ -60,11 +60,11 @@ progress {
 
 <template>
   <div id="file-drag-drop">
-    <form ref="fileform">
+    <form  class="form" ref="fileform">
       <span class="drop-files">Drop the files here!</span>
     </form>
 
-    <progress max="100" :value.prop="uploadPercentage"></progress>
+    <progress class="progress" max="100" :value.prop="uploadPercentage"></progress>
 
     <div v-for="(file, key) in files" class="file-listing">
       <img class="preview" v-bind:ref="'preview'+parseInt( key )"/>
