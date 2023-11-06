@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  frontend:
+    restart: always
+
+    container_name: Front
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    expose:
+      - 8080:8080
+
+  backend:
+    restart: always
+    container_name: backend
+    build:
+      context: .
+      dockerfile: dockerfile
+    expose:
+      - 8000:8000
+    depends_on:
+      - db
+    env_file:
+      - ./Database/DB.env
+    command: gunicorn Application.main:app -w 4 --worker_class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+  db:
+    image: postgres
+    env_file:
+      - ./Database/DB.env
+    ports:
+      - 5432:5432

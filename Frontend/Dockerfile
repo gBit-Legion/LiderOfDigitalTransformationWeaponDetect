@@ -4,7 +4,7 @@ FROM node:lts-alpine
 RUN npm install -g http-server
 
 # делаем каталог 'app' текущим рабочим каталогом
-WORKDIR /frontend
+WORKDIR /Frontend
 
 # копируем оба 'package.json' и 'package-lock.json' (если есть)
 COPY package*.json ./
