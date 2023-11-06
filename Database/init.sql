@@ -11,8 +11,8 @@
     CREATE TABLE camera_db (
       id SERIAL PRIMARY KEY,
       urls VARCHAR(15),
-      latitude varchar(255),
-      longitude varchar(255),
+      latitude VARCHAR(255),
+      longitude VARCHAR(255),
       physical_address VARCHAR(255)
     );
 

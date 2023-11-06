@@ -1,4 +1,31 @@
-from sqlmodel import Field, Session, SQLModel, create_engine
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
-class CameraObject(SQLModel, table=True):
-    id: int = Field()
+Base = declarative_base()
+
+
+class CameraObject(Base):
+    __tablename__ = "camera_db"
+
+    id = Column(Integer, primary_key=True)
+    url = Column(String(255))
+    latitude = Column(String(255))
+    longitude = Column(String(255))
+    physical_address = (String(255))
+
+
+class DatasetDB(Base):
+    __tablename__ = "dataset_db"
+
+    id = Column(Integer, primary_key=True)
+    file_name = Column(String(255))
+    full_file_path = Column(String(255))
+    class_number = Column(Integer)
+    labels_path = Column(String(255))
+
+
+class EmployeeDB(Base):
+    __tablename__ = "employee_db"
+    id = Column(Integer, primary_key=True)
+    FIO = Column(String(255))
+    day_password = Column(String(255))
