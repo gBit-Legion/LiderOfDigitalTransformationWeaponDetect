@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .form {
   display: block;
   height: 400px;

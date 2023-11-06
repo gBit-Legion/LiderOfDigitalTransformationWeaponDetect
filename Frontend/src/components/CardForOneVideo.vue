@@ -32,7 +32,11 @@
               <div>Класс: knife</div>
               
             </div>
+           
+
+
           </figcaption>
+          
         </figure>
         
       </div>

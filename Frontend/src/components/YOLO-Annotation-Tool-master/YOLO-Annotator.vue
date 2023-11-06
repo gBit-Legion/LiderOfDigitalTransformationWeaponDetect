@@ -1,5 +1,7 @@
 <template>
+  
   <body class="body">
+    
     <div class="container" id="container">
         <div class="left">
             <form  class="form" action="">
@@ -79,7 +81,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .body {
     overflow: hidden;
 }
@@ -89,12 +91,11 @@ export default {
 }
 
 hr {
-    width: 100%;
+    width:80%;
 }
 
 .container {
     display: block;
-    position: absolute;
     height: auto;
     bottom: 0;
     top: 0;
@@ -108,7 +109,6 @@ hr {
 
 .left {
     width: calc(30% - 10px);
-    position: absolute;
     left: 0;
     top: 0;
     bottom: 0;

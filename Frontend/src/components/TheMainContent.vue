@@ -31,18 +31,7 @@
     >
       <div class="px-5 py-3 h-full" v-if="$attrs.activeindex === 1">
         <UploadForm />
-        <DropDownOffice />
-        <div
-          class="bg-idealDarkGray text-2xl rounded-xl h-56 mt-2 text-left px-4 text-white font-TT_Firs_Neue_Bold font-bold"
-        >
-          <p class="pt-4">Тест</p>
-        </div>
-        <div
-          class="bg-idealDarkGray text-2xl rounded-xl h-56 mt-2 text-left px-4 text-white font-TT_Firs_Neue_Bold font-bold"
-        >
-          <p class="pt-4">Время</p>
-          <p class="pt-4">Количество людей</p>
-        </div>
+        <UploadTableExampleVue />
       </div>
     </transition>
 
@@ -56,7 +45,6 @@
     >
       <div class="px-5 py-3 h-full" v-if="$attrs.activeindex === 2">
         <VideoDet />
-       
       </div>
     </transition>
 
@@ -84,6 +72,7 @@ import VideoDet from "./VideoDet.vue";
 import RightDropSidebar from "@/components/RightDropSidebar.vue";
 import UploadForm from "@/components/UploadForm.vue";
 import YOLOAnnotator from './YOLO-Annotation-Tool-master/YOLO-Annotator.vue';
+import UploadTableExampleVue from './UploadTableExample.vue';
 
 export default {
   components: {
@@ -93,7 +82,8 @@ export default {
     UploadForm,
     DropDownOffice,
     YOLOAnnotator,
-    VideoDet
+    VideoDet,
+    UploadTableExampleVue
 },
   props: {
     allpostamats: Object,
