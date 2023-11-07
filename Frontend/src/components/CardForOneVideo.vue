@@ -2,8 +2,8 @@
   <div class="grid-cols-1 sm:grid md:grid-cols-2 ">
     <div v-for="el in 6" :key="el"
       class="mx-3 mt-6 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-      <video controls="controls" class="rounded-t-lg">
-        <source src="../image/test-video.mp4">
+      <video  controls="controls" class="rounded-t-lg">
+        <source  type="video/mp4" src="http://26.234.143.237:8000/processed_video/futaj-s-orujiem_(VIDEOMIN.NET).mp4">
       </video>
       <div class="p-6">
         <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
@@ -25,9 +25,8 @@
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Изображение {{ image }}</h3>
             
           </blockquote>
-          <figcaption class="flex items-center justify-center space-x-3">
-            <img class="w-80" src="https://gpvn.ru/files/2022/08/vn08830.jpg" alt="stop-cadr">
-            
+          <figcaption  class="flex items-center justify-center space-x-3">
+            <img @click="image_click(image)" class="w-80" src="https://gpvn.ru/files/2022/08/vn08830.jpg" alt="stop-cadr">
             <div class="space-y-0.5 font-medium dark:text-white text-left">
               <div>Класс: knife</div>
               
@@ -52,9 +51,16 @@ export default {
     return {
       card_isOpen: false,
       choosed_card: -1,
+      choosed_images: [ ],
+      responed_data: [
+        {url: ""}
+      ]
     }
   },
   methods: {
+    image_click(img_name){
+      this.choosed_images.push(img_name)
+    }
   }
 }
 </script>

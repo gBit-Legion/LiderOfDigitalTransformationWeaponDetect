@@ -43,6 +43,7 @@
       leave-from-class="transform opacity-100 scale-100"
       leave-to-class="transform opacity-0 scale-95"
     >
+
       <div class="px-5 py-3 h-full" v-if="$attrs.activeindex === 2">
         <VideoDet />
       </div>

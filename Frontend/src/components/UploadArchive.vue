@@ -4,7 +4,7 @@
       <p
         class="text-idealDarkGray flex justify-center text-center text-6xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
       >
-        ЗАГРУЗКА СПИСКА КАМЕР
+        ЗАГРУЗКА АРХИВА ВИДЕОЗАПИСЕЙ
       </p>
       <div class="max-w-6xl mx-auto mt-4">
         <div class="relative mb-4 flex w-full items-stretch">
@@ -14,7 +14,7 @@
             id="file_input"
             type="file"
             ref="files"
-            accept=".xlsx"
+            accept=".rar, .zip, .7zip"
           />
           <button
             class="relative z-[2] border-idealBlue rounded-r-[7px] border-2 px-4 py-2 text-sm font-medium font-TT_Firs_Neue_Regular text-whitesmoke bg-idealBlue text-gray-50 transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 hover:text-idealBlue focus:outline-none focus:ring-0"
@@ -53,7 +53,7 @@ export default {
       console.log(typeof formData);
       axios
         .post(
-          `http://${process.env.VUE_APP_USER_IP_WITHPORT}/excel`,
+          `http://${process.env.VUE_APP_USER_IP_WITHPORT}/archive`,
           formData,
           {
             headers: {
@@ -62,7 +62,7 @@ export default {
           }
         )
         .then(response => (
-          console.log(response),
+          console.log(response.data),
           console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!")
         ))
         .catch(function (response) {
