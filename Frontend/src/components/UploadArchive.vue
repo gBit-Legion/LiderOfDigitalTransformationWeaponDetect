@@ -62,7 +62,7 @@ export default {
           }
         )
         .then(response => (
-          console.log(response),
+          console.log(response.data),
           console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!")
         ))
         .catch(function (response) {

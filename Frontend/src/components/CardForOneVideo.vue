@@ -3,7 +3,7 @@
     <div v-for="el in 6" :key="el"
       class="mx-3 mt-6 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
       <video  controls="controls" class="rounded-t-lg">
-        <source  type="video/mp4" src="http:/26.234.143.237:8000/processed_video">
+        <source  type="video/mp4" src="http://26.234.143.237:8000/processed_video/futaj-s-orujiem_(VIDEOMIN.NET).mp4">
       </video>
       <div class="p-6">
         <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
@@ -51,7 +51,10 @@ export default {
     return {
       card_isOpen: false,
       choosed_card: -1,
-      choosed_images: [ ]
+      choosed_images: [ ],
+      responed_data: [
+        {url: ""}
+      ]
     }
   },
   methods: {
