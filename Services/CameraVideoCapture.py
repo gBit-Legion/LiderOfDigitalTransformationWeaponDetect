@@ -32,19 +32,19 @@ class RTSPCamera:
 
 
 # Пример использования класса RTSPCamera
-username = "your_username"
-password = "your_password"
-rtsp_url = "your_rtsp_url"
-
-camera = RTSPCamera(username, password, rtsp_url)
-camera.connect()
-
-while True:
-    frame = camera.read_frame()
-    if frame is not None:
-        """ Здесь добавить обработку видеопотока """
-        cv2.imshow("RTSP Stream", frame)
-    """ Нажмите 'q', чтобы выйти из цикла """
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-camera.disconnect()
+# username = "your_username"
+# password = "your_password"
+# rtsp_url = "your_rtsp_url"
+#
+# camera = RTSPCamera(username, password, rtsp_url)
+# camera.connect()
+#
+# while True:
+#     frame = camera.read_frame()
+#     if frame is not None:
+#         """ Здесь добавить обработку видеопотока """
+#         cv2.imshow("RTSP Stream", frame)
+#     """ Нажмите 'q', чтобы выйти из цикла """
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+# camera.disconnect()
