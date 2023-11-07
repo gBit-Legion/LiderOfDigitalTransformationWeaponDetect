@@ -72,10 +72,13 @@
             <canvas id="hiddenCanvas"></canvas>
         </div>
     </div>
-</body>
-</template>
+    
 
+</body>
+
+</template>
 <script>
+
 export default {
 
 }

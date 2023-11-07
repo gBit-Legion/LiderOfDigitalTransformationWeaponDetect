@@ -59,7 +59,7 @@ a.submit-button {
 </style>
 
 <template>
-  <div id="file-drag-drop">
+  <div  id="file-drag-drop">
     <form  class="form" ref="fileform">
       <span class="drop-files">Drop the files here!</span>
     </form>

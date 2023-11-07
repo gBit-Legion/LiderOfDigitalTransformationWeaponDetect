@@ -25,9 +25,8 @@
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Изображение {{ image }}</h3>
             
           </blockquote>
-          <figcaption class="flex items-center justify-center space-x-3">
-            <img class="w-80" src="https://gpvn.ru/files/2022/08/vn08830.jpg" alt="stop-cadr">
-            
+          <figcaption  class="flex items-center justify-center space-x-3">
+            <img @click="image_click(image)" class="w-80" src="https://gpvn.ru/files/2022/08/vn08830.jpg" alt="stop-cadr">
             <div class="space-y-0.5 font-medium dark:text-white text-left">
               <div>Класс: knife</div>
               
@@ -52,9 +51,13 @@ export default {
     return {
       card_isOpen: false,
       choosed_card: -1,
+      choosed_images: [ ]
     }
   },
   methods: {
+    image_click(img_name){
+      this.choosed_images.push(img_name)
+    }
   }
 }
 </script>
