@@ -1,5 +1,6 @@
 import openpyxl
 
+
 class TableParser:
     def __init__(self, file_path):
         """ Путь к файлу .xlsx """
@@ -23,6 +24,6 @@ class TableParser:
 
 
 # Пример использования
-file_path = 'путь_к_файлу.xlsx'
-table_parser = TableParser()
-parsed_data = table_parser.parse_xlsx_file(file_path)
+# file_path = 'путь_к_файлу.xlsx'
+# table_parser = TableParser()
+# parsed_data = table_parser.parse_xlsx_file(file_path)

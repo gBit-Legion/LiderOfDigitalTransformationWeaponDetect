@@ -1,5 +1,6 @@
 import cv2
 
+
 class RTSPCamera:
     def __init__(self, username, password, rtsp_url):
         """ учетные данные для авторизации """

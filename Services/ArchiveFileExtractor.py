@@ -1,5 +1,6 @@
 import zipfile
 
+
 class ZipFileExtractor:
     def __init__(self, zip_file_path):
         self.zip_file_path = zip_file_path
@@ -19,16 +20,16 @@ class ZipFileExtractor:
 
 
 # Пример использования класса ZipFileExtractor
-zip_file_path = 'path/to/your/archive.zip'
-extract_dir = 'path/to/extract'
-
-""" Создаем экземпляр класса ZipFileExtractor """
-zip_extractor = ZipFileExtractor(zip_file_path)
-
-""" Разархивируем файлы в указанный каталог """
-zip_extractor.extract_files(extract_dir)
-
-""" Получаем список путей ко всем файлам внутри архива """
-file_paths = zip_extractor.get_file_paths()
-
-""" Тут нужно подать их на обработку модели """
+# zip_file_path = 'path/to/your/archive.zip'
+# extract_dir = 'path/to/extract'
+#
+# """ Создаем экземпляр класса ZipFileExtractor """
+# zip_extractor = ZipFileExtractor(zip_file_path)
+#
+# """ Разархивируем файлы в указанный каталог """
+# zip_extractor.extract_files(extract_dir)
+#
+# """ Получаем список путей ко всем файлам внутри архива """
+# file_paths = zip_extractor.get_file_paths()
+#
+# """ Тут нужно подать их на обработку модели """

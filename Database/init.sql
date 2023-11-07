@@ -11,17 +11,15 @@
     CREATE TABLE camera_db (
       id SERIAL PRIMARY KEY,
       urls VARCHAR(15),
-      latitude VARCHAR(255),
-      longitude VARCHAR(255),
-      physical_address VARCHAR(255)
+      latitude VARCHAR(255) NULL,
+      longitude VARCHAR(255) NULL,
+      physical_address VARCHAR(255) NULL
     );
 
     -- Создание второй таблицы
     CREATE TABLE dataset_db (
       id SERIAL PRIMARY KEY,
-      file_name VARCHAR(255),
       full_file_path VARCHAR(255),
-      class_number INTEGER,
       labels_path VARCHAR(255)
     );
 
