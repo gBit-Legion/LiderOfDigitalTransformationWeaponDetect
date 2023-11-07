@@ -25,3 +25,23 @@ image_files_train, image_files_val = train_test_split(image_files, test_size=0.1
 spliter = DatasetSpliter(source_dir, val_dir)
 spliter.move_files(image_files_val)
 ''' ------------------------------------------------------------- '''
+
+''' Код для получения видеофайлов из архива и их обработки '''
+from YoloHandlers import VideoProcessor
+from ArchiveFileExtractor import ZipFileExtractor
+
+zip_file_path = './videos.zip'
+extract_dir = '.'
+
+""" Создаем экземпляр класса ZipFileExtractor """
+zip_extractor = ZipFileExtractor(zip_file_path)
+
+""" Разархивируем файлы в указанный каталог """
+zip_extractor.extract_files(extract_dir)
+
+''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
+input_folder = './videos'
+output_folder = './output_videos'
+processor = VideoProcessor(input_folder, output_folder)
+processor.process_videos()
+''' ------------------------------------------------------ '''
