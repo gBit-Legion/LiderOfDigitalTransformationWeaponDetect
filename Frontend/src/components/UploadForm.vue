@@ -50,7 +50,7 @@ export default {
         let file = this.files[i];
         formData.append("file", file);
       }
-      console.log(formData);
+      console.log(typeof formData);
       axios
         .post(
           `http://${process.env.VUE_APP_USER_IP_WITHPORT}/excel`,
@@ -62,6 +62,7 @@ export default {
           }
         )
         .then(response => (
+          console.log(response),
           console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!")
         ))
         .catch(function (response) {
