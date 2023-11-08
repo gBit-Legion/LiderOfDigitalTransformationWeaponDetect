@@ -3,8 +3,6 @@ import threading
 from telebot import types
 from loguru import logger
 
-
-
 TOKEN = '6686505205:AAHhdgG7ZZ7Dmq3ziVXMGzn5gHPi58IJM9s'
 bot = telebot.TeleBot(TOKEN)
 logger.success('telega is started')
@@ -68,4 +66,4 @@ def update_location(chat_id):
         threading.Timer(10, update_location, args=[chat_id]).start()
 
 
-bot.polling()
+bot.polling(none_stop=True)
