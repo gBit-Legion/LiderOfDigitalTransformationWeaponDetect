@@ -1,9 +1,9 @@
 import os
 import cv2
 import concurrent.futures
-# from ultralytics import YOLO
-#
-# model = YOLO('model/best.pt')
+from ultralytics import YOLO
+
+model = YOLO('./ML_AI_NN/best.pt')
 
 class_colors = \
     {
@@ -61,48 +61,48 @@ class VideoProcessor:
         ''' Создание объекта VideoWriter для записи нового видеофайла '''
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
-
+        frame_count = 0
         while capture.isOpened():
             ''' Чтение кадра '''
             ret, frame = capture.read()
 
             if ret:
                 ''' Обработка моделью (Предварительно) '''
-                # result = model(frame, save_txt=True, save_crop=True)
-                #
-                # for result_item in result:
-                #     boxes = result_item.boxes.cpu().numpy()
-                #
-                #     for box in boxes:
-                #         r = box.xyxy[0].astype(int)
-                #         cls = box.cls[0].astype(int)
-                #         if cls == 0:
-                #             label = "knife"
-                #         if cls == 1:
-                #             label = "pistol"
-                #         if cls == 2:
-                #             label = "gun"
-                #         if cls == 3:
-                #             label = "shotgun"
-                #
-                #         box_color = class_colors.get(cls, (255, 255, 255))
-                #
-                #         (label_width, label_height), _ = cv2.getTextSize(label, class_font, class_font_scale, 1)
-                #         text_position = (r[0], r[1] - 3 - label_height)
-                #
-                #         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
-                #         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
+                result = model(frame, save_txt=True, save_crop=True)
 
-                #         save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
-                #         cv2.imwrite(save_frame_path, frame)
-                #         frame_count += 1
+                for result_item in result:
+                    boxes = result_item.boxes.cpu().numpy()
+
+                    for box in boxes:
+                        r = box.xyxy[0].astype(int)
+                        cls = box.cls[0].astype(int)
+                        if cls == 0:
+                            label = "knife"
+                        if cls == 1:
+                            label = "pistol"
+                        if cls == 2:
+                            label = "gun"
+                        if cls == 3:
+                            label = "riffle"
+
+                        box_color = class_colors.get(cls, (255, 255, 255))
+
+                        (label_width, label_height), _ = cv2.getTextSize(label, class_font, class_font_scale, 1)
+                        text_position = (r[0], r[1] - 3 - label_height)
+
+                        cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
+                        cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
+
+                        save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
+                        cv2.imwrite(save_frame_path, frame)
+                        frame_count += 1
                 
-                center_x = int(width / 2)
-                center_y = int(height / 2)
-
-                # Рисование красной точки в центре кадра
-                cv2.circle(frame, (center_x, center_y), 5, (0, 0, 255), -1)
-
+                # center_x = int(width / 2)
+                # center_y = int(height / 2)
+                #
+                # # Рисование красной точки в центре кадра
+                # cv2.circle(frame, (center_x, center_y), 5, (0, 0, 255), -1)
+                #
                 ''' Запись обработанного кадра в новый видеофайл '''
                 out.write(frame)
 

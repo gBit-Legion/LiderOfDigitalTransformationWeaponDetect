@@ -1,4 +1,6 @@
 ''' Код для разделения сохраниения и разделения обучающей выборки '''
+import shutil
+
 from Services.ArchiveFileExtractor import ZipFileExtractor
 from Services.YoloHandlers import VideoProcessor
 
@@ -34,19 +36,30 @@ from sklearn.model_selection import train_test_split
 
 def unarchived(file_name):
     zip_file_path = file_name
-    extract_dir = '.'
+
+    extract_dir = './archive'
+    print(extract_dir)
 
     """ Создаем экземпляр класса ZipFileExtractor """
     zip_extractor = ZipFileExtractor(zip_file_path)
 
     """ Разархивируем файлы в указанный каталог """
     zip_extractor.extract_files(extract_dir)
-
+    os.remove(file_name)
+    print(1)
     ''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
+
     input_folder = './archive'
     output_folder = './video'
+    print(2)
     processor = VideoProcessor(input_folder, output_folder, "./image")
     processor.process_videos()
+    for filename in os.listdir("./archive"):
+        file_path = os.path.join("./archive", filename)
+        # Проверяем, является ли объект файлом
+        if os.path.isfile(file_path):
+            # Удаляем файл
+            os.remove(file_path)
 
 
 ''' ------------------------------------------------------ '''

@@ -62,7 +62,6 @@ async def archive_upload(file: UploadFile):
 
     result_list = []
 
-
     try:
         with open(file_path, "wb") as f:
             f.write(file.file.read())
@@ -87,8 +86,6 @@ async def archive_upload(file: UploadFile):
                 result_image = {"image_name": "no_weapon_detected"}
                 result_list.append({"url": url, "image": result_image})
         print(result_list)
-        # url_encoded_data = [urllib.parse.quote(json.dumps(item)) for item in result_list]
-        # print(url_encoded_data)
         return json.dumps(result_list)
     except Exception as e:
         return {"message": e.args}
