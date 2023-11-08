@@ -1,5 +1,7 @@
 import json
 import os
+from multiprocessing import Process
+
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Form, routing
 from fastapi.responses import FileResponse, HTMLResponse
@@ -10,15 +12,11 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 
 from Services.CodesForInteraction import *
+from Services.TgBotKeeper import *
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="./Frontend/yolo"), name='static')
-
-
-@app.get("/static/{filename}")
-async def return_html_file(filename: str):
-    return FileResponse(f"./Frontend/yolo/{filename}")
 
 
 origins = ["*"]
@@ -29,6 +27,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Запуск процесса для обработки файла
+# p = Process(target=bot_start)
+# p.start()
+# p.join()
+
+@app.get("/static/{filename}")
+async def return_html_file(filename: str):
+    return FileResponse(f"./Frontend/yolo/{filename}")
 
 
 @app.post('/excel')

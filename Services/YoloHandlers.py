@@ -96,7 +96,7 @@ class VideoProcessor:
                         save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
                         cv2.imwrite(save_frame_path, frame)
                         frame_count += 1
-                
+
                 # center_x = int(width / 2)
                 # center_y = int(height / 2)
                 #
