@@ -90,8 +90,8 @@ class VideoProcessor:
                 #         (label_width, label_height), _ = cv2.getTextSize(label, class_font, class_font_scale, 1)
                 #         text_position = (r[0], r[1] - 3 - label_height)
                 #
-                #         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
-                #         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
+                #         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 4)
+                #         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 3)
 
                 #         save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
                 #         cv2.imwrite(save_frame_path, frame)

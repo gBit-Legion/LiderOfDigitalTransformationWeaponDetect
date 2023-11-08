@@ -68,7 +68,7 @@ export default {
             console.log(response.data),
             this.GET_LOADING(false),
             console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!"),
-            this.GET_VIDEO(response.data.url)
+            this.GET_VIDEO(JSON.parse(response.data))
           )
         )
         .catch(
