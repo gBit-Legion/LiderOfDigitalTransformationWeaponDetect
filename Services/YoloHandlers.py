@@ -38,7 +38,9 @@ class VideoProcessor:
             for video_file in video_files:
                 input_file = os.path.join(self.input_folder, video_file)
                 output_file = os.path.join(self.output_folder, f'processed_{video_file}')
-                futures.append(executor.submit(self.process_video, input_file, output_file))
+                save_frames_folder = os.path.join(self.save_frames_folder,
+                                                  f'{video_file}_frames')  # Новая папка для сохранения фреймов
+                futures.append(executor.submit(self.process_video, input_file, output_file, save_frames_folder))
 
             ''' Ожидание завершения всех потоков '''
             for future in concurrent.futures.as_completed(futures):
@@ -46,7 +48,7 @@ class VideoProcessor:
                 if exception:
                     print(f'Ошибка при обработке видео: {exception}')
 
-    def process_video(self, input_file, output_file):
+    def process_video(self, input_file, output_file, save_frames_folder):
         capture = cv2.VideoCapture(input_file)
 
         ''' Проверка, удалось ли открыть файл '''
@@ -58,10 +60,15 @@ class VideoProcessor:
         width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+        ''' Создание папки для сохранения фреймов '''
+        if not os.path.exists(save_frames_folder):
+            os.makedirs(save_frames_folder)
+
         ''' Создание объекта VideoWriter для записи нового видеофайла '''
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
         frame_count = 0
+
         while capture.isOpened():
             ''' Чтение кадра '''
             ret, frame = capture.read()
@@ -93,8 +100,10 @@ class VideoProcessor:
                         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
                         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
 
-                        save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
-                        cv2.imwrite(save_frame_path, frame)
+                        if frame_count % 60 == 0:  # Сохранение только каждого 60-го фрейма в папку
+                            save_frame_path = os.path.join(save_frames_folder, f'frame_{frame_count}.jpg')
+                            cv2.imwrite(save_frame_path, frame)
+
                         frame_count += 1
 
                 # center_x = int(width / 2)
@@ -102,7 +111,7 @@ class VideoProcessor:
                 #
                 # # Рисование красной точки в центре кадра
                 # cv2.circle(frame, (center_x, center_y), 5, (0, 0, 255), -1)
-                #
+
                 ''' Запись обработанного кадра в новый видеофайл '''
                 out.write(frame)
 
