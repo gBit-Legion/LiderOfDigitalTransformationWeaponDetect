@@ -1,5 +1,18 @@
 <template>
+  <div> 
+    <p
+        class="text-idealDarkGray flex justify-center text-center text-md font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
+      >
+        Под каждым видео выберите стоп-кадры, которые соответсвуют действительности. Это поможет улучшить качество модели!
+       
+      </p>
+      <p
+        class="text-idealDarkGray flex justify-center text-center text-xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
+      >
+      Выбранные изображения: {{ train_dataset }}
+      </p>
   <div class="grid-cols-1 sm:grid md:grid-cols-2 ">
+    
     <div v-for="(el, index) in url_list" :key="index"
       class="mx-3 mt-6 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
       <video controls="controls" class="rounded-t-lg">
@@ -24,8 +37,8 @@
           <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Изображение "{{ image.name }}"</h3>
           </blockquote>
-          <figcaption class="flex items-center justify-center space-x-3">
-            <img @click="image_click(image)" class="w-80" :src="image.url" alt="stop-cadr">
+          <figcaption class="flex items-center  justify-center space-x-3">
+            <img @click="image_click(image.name)"  class="w-80 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-600" :src="image.url" alt="stop-cadr">
             <div class="space-y-0.5 font-medium dark:text-white text-left">
               <div>Класс: {{image.class}}</div>
             </div>
@@ -36,6 +49,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -50,19 +64,39 @@ export default {
       card_isOpen: false,
       choosed_card: -1,
       choosed_images: [],
-      url_list: [],
-      image_list: [
-        
-    ],
-      class_list: [
-
+      url_list: ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"],
+      train_dataset: [],
+      jsonList: [
+        {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
+      name: 'Bottle',
+    class:'drunk'},
+    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
+      name: 'Bottle1',
+    class:'drunk'},
+    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
+      name: 'Bottle2',
+    class:'drunk'},
+    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
+      name: 'Bottle5',
+    class:'drunk'},
+    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
+      name: 'Bottle',
+    class:'drunk'}
       ],
-      jsonList: []
+
     }
   },
   methods: {
     image_click(img_name) {
-      this.choosed_images.push(img_name)
+      if(this.train_dataset.includes(img_name))
+      {
+        this.train_dataset = this.train_dataset.filter(element => element !== img_name)
+      }
+      else
+      {
+        this.train_dataset.push(img_name)
+        
+      }
     }
   },
   computed: {
