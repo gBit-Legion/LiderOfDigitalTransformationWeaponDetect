@@ -21,6 +21,7 @@ class VideoProcessor:
     def __init__(self, input_folder, output_folder):
         self.input_folder = input_folder
         self.output_folder = output_folder
+        self.save_frames_folder = save_frames_folder
 
     def process_videos(self):
         ''' Проверка существования выходной папки, иначе создание '''
@@ -92,6 +93,10 @@ class VideoProcessor:
                 #         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
                 #         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
 
+                #         save_frame_path = os.path.join(self.save_frames_folder, f'frame_{frame_count}.jpg')
+                #         cv2.imwrite(save_frame_path, frame)
+                #         frame_count += 1
+                
                 center_x = int(width / 2)
                 center_y = int(height / 2)
 
