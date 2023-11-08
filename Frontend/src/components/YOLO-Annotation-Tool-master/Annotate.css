@@ -13,11 +13,6 @@ hr {
 .container {
     display: block;
     position: absolute;
-    height: auto;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
 }
 
 .column_wrap {
@@ -42,7 +37,7 @@ hr {
 }
 
 #images, #classes, #bboxes {
-    width: 175px;
+    width: 300px;
     margin-top: 10px;
 }
 

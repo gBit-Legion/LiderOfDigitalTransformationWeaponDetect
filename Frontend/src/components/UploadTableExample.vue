@@ -27,6 +27,12 @@
             >
               Долгота
             </th>
+            <th
+              scope="col"
+              class="px-6 py-3 2xl:w-54 cursor-pointer hover:text-[#e40046]"
+            >
+              Адрес
+            </th>
           </tr>
         </thead>
         <tbody class="font-semibold">
@@ -36,6 +42,7 @@
             </td>
             <td class="px-6 py-4">55.851233</td>
             <td class="px-6 py-4">35.32134</td>
+            <td class="px-6 py-4">г. Спб, Лиговский проспект</td>
           </tr>
         </tbody>
       </table>
