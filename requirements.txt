@@ -8,3 +8,5 @@ uvicorn
 python-dotenv
 SQLModel
 pandas
+opencv-python
+openpyxl

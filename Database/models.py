@@ -18,9 +18,7 @@ class DatasetDB(Base):
     __tablename__ = "dataset_db"
 
     id = Column(Integer, primary_key=True)
-    file_name = Column(String(255))
     full_file_path = Column(String(255))
-    class_number = Column(Integer)
     labels_path = Column(String(255))
 
 
