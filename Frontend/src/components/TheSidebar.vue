@@ -16,18 +16,15 @@
           :icon="navItem.icon"
         />
       </div>
-      <!-- <Filter /> -->
     </div>
   </aside>
 </template>
 
 <script>
-import Filter from "./Filter.vue";
 import Button from "./Button.vue";
 import SidebarNavItem from "./SidebarNavItem.vue";
 export default {
   components: {
-    Filter,
     Button,
     SidebarNavItem,
   },

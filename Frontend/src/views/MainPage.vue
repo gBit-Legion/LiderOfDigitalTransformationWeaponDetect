@@ -39,7 +39,6 @@
 import TheHeader from "@/components/TheHeader.vue";
 import { mapActions, mapGetters } from "vuex";
 import TheSidebar from "@/components/TheSidebar.vue";
-import LoadingScreen from "@/components/LoadingScreen.vue";
 import TheMainContent from "@/components/TheMainContent.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 export default {
@@ -47,11 +46,10 @@ export default {
     TheHeader,
     TheSidebar,
     TheMainContent,
-    LoadingScreen,
     BaseIcon,
   },
   computed: {
-    ...mapGetters(["allpostamats", "selected_filter"]),
+    ...mapGetters(["allpostamats",]),
   },
   data() {
     return {
