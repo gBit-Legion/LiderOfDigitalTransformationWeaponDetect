@@ -3,7 +3,11 @@ export default {
   state: {
     archive_videos: [
     ],
-    archvive_isLoading: false
+    archvive_isLoading: false,
+    error: {
+      status: false,
+      code: 0,
+      }
   },
   mutations: {
     SET_VIDEOS: (state, payload) => {
@@ -11,6 +15,9 @@ export default {
     },
     SET_VIDEOISLOADING: (state, payload) => {
       state.archvive_isLoading = payload
+    },
+    SET_ERROR: (state, payload) => {
+      state.error = payload
     }
   },
   getters: {
@@ -19,6 +26,9 @@ export default {
     },
     isLoading(state) {
       return state.archvive_isLoading;
+    },
+    error(state) {
+      return state.error;
     }
    
   },
@@ -39,5 +49,8 @@ export default {
     GET_LOADING: (context, video_isLoadng) => {
       context.commit("SET_VIDEOISLOADING", video_isLoadng)
     },
+    GET_ERROR: (context, error, code) => {
+      context.commit("SET_ERROR", {status: error, code: code})
+    }
   }
 }

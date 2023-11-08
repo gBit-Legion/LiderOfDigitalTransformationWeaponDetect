@@ -32,24 +32,21 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import axios from 'axios'
+import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
 export default {
-
-  data(){
+  data() {
     return {
-      files: ""
-    }
+      files: "",
+    };
   },
-computed: {
- ...mapGetters(['isLoading'])
-},
+  computed: {
+    ...mapGetters(["isLoading", "error"]),
+  },
   methods: {
-    ...mapActions([
-      'GET_VIDEO', 'GET_LOADING']),
+    ...mapActions(["GET_VIDEO", "GET_LOADING", "GET_ERROR"]),
     submitFiles() {
-      
-      this.GET_LOADING(true)
+      this.GET_LOADING(true);
       let formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         let file = this.files[i];
@@ -66,28 +63,26 @@ computed: {
             },
           }
         )
-        .then(response => (
-          console.log(response.data),
-          this.GET_LOADING(false),
-          console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!"),
-          this.GET_VIDEO(response.data.url)
-          
-        ))
-        .catch(function (response) {
-          console.log(response.statusCode);
-          if (response.statusCode == 400) {
-            alert("Такой файл уже был загружен! Загрузите другой.");
-          }
-        })
-        .finally(function () {
-          
-        });
+        .then(
+          (response) => (
+            console.log(response.data),
+            this.GET_LOADING(false),
+            console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!"),
+            this.GET_VIDEO(response.data.url)
+          )
+        )
+        .catch(
+          (response) => (
+            console.log(response), 
+            this.GET_LOADING(false), 
+            this.GET_ERROR(true, response.status)
+          )
+        )
+        .finally(function () {});
     },
     handleFilesUpload() {
       this.files = this.$refs.files.files;
     },
-
-    }
-}
-
+  },
+};
 </script>
