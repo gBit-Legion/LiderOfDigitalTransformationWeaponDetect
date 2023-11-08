@@ -33,6 +33,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
 
   data(){
@@ -41,7 +42,9 @@ export default {
     }
   },
 
+
   methods: {
+   
     submitFiles() {
       
       this.is_Loading = true;
@@ -63,6 +66,7 @@ export default {
         )
         .then(response => (
           console.log(response),
+          
           console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!")
         ))
         .catch(function (response) {

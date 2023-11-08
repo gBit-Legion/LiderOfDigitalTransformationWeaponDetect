@@ -1,11 +1,11 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import banks from '@/store/modules/banks'
+import weapondetection from '@/store/modules/weapondetection'
 
 
 export default createStore({
   
   modules: {
-    banks
+    weapondetection
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <UploadArchive />
-    <div class="flex items-center justify-center w-full h-full">
+    <div v-if="isLoading" class="flex items-center justify-center w-full h-full">
 	<div class="flex justify-center items-center space-x-1 text-sm text-gray-700">
 		 
 				<svg fill='none' class="w-6 h-6 animate-spin" viewBox="0 0 32 32" xmlns='http://www.w3.org/2000/svg'>
@@ -11,11 +11,10 @@
 				</svg>
 
 		 
-		<div>Пожалуйста, подождите ...</div>
+		<div>Обработка видео. Пожалуйста, подождите...</div>
 	</div>
 </div>
-    <CardForOneVideo />
-    
+    <CardForOneVideo v-else />
   </div>
 </template>
 
@@ -27,12 +26,15 @@
 <script>
 import UploadArchive from './UploadArchive.vue';
 import CardForOneVideo from './CardForOneVideo.vue';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     UploadArchive,
     CardForOneVideo
   },
-
+  computed: {
+ ...mapGetters(['isLoading'])
+},
   methods: {
 
   }

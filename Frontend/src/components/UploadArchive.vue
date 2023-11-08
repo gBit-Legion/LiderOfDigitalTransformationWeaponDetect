@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
 
@@ -40,11 +41,15 @@ export default {
       files: ""
     }
   },
-
+computed: {
+ ...mapGetters(['isLoading'])
+},
   methods: {
+    ...mapActions([
+      'GET_VIDEO', 'GET_LOADING']),
     submitFiles() {
       
-      this.is_Loading = true;
+      this.GET_LOADING(true)
       let formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         let file = this.files[i];
@@ -63,7 +68,10 @@ export default {
         )
         .then(response => (
           console.log(response.data),
-          console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!")
+          this.GET_LOADING(false),
+          console.log("ФАЙЛ УСПЕШНО ЗАГРУЖЕН!"),
+          this.GET_VIDEO(response.data.url)
+          
         ))
         .catch(function (response) {
           console.log(response.statusCode);
