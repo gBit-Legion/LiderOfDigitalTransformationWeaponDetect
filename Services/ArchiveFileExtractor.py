@@ -1,5 +1,6 @@
 import zipfile
 
+
 class ZipFileExtractor:
     def __init__(self, zip_file_path):
         self.zip_file_path = zip_file_path
