@@ -64,24 +64,7 @@ export default {
       card_isOpen: false,
       choosed_card: -1,
       choosed_images: [],
-      url_list: ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"],
-      train_dataset: [],
-      jsonList: [
-        {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
-      name: 'Bottle',
-    class:'drunk'},
-    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
-      name: 'Bottle1',
-    class:'drunk'},
-    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
-      name: 'Bottle2',
-    class:'drunk'},
-    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
-      name: 'Bottle5',
-    class:'drunk'},
-    {url: 'https://img-fotki.yandex.ru/get/2/psihoanalitic.9/0_1036c_103c51e1_XL',
-      name: 'Bottle',
-    class:'drunk'}
+      url_list: [
       ],
 
     }
