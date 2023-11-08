@@ -17,8 +17,8 @@
 <!-- component -->
 <div v-else-if="error.status" class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
 	<h1 class="text-9xl font-extrabold text-white tracking-widest">{{error.code}}</h1>
-	<div class="bg-[#FF6A3D] px-2 text-sm rounded rotate-12 absolute">
-		ОШИБКА
+	<div class="bg-[#FF6A3D] px-2 text-2xl rounded rotate-12 absolute">
+		ОШИБКА :( Попробуйте еще раз
 	</div>
 	<button class="mt-5">
       <a
