@@ -32,8 +32,8 @@ from sklearn.model_selection import train_test_split
 ''' Код для получения видеофайлов из архива и их обработки '''
 
 
-def unarchived():
-    zip_file_path = './archive.zip'
+def unarchived(file_name):
+    zip_file_path = file_name
     extract_dir = '.'
 
     """ Создаем экземпляр класса ZipFileExtractor """
@@ -45,7 +45,7 @@ def unarchived():
     ''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
     input_folder = './archive'
     output_folder = './video'
-    processor = VideoProcessor(input_folder, output_folder)
+    processor = VideoProcessor(input_folder, output_folder, "./image")
     processor.process_videos()
 
 

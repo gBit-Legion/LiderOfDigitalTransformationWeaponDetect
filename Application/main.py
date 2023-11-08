@@ -61,11 +61,12 @@ async def archive_upload(file: UploadFile):
     file_path = Path("./archive", file.filename)
 
     result_list = []
-    unarchived()
+
 
     try:
         with open(file_path, "wb") as f:
             f.write(file.file.read())
+        unarchived(file_path)
         try:
             list_dir = os.listdir("./video")
         except Exception as e:
