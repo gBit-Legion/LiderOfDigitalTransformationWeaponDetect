@@ -30,17 +30,17 @@
         </button>
         <div v-if="card_isOpen && choosed_card == el"
           class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
-          <figure v-for="(image, index) in jsonList" :key="index"
+          <figure
             class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
             <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Изображение "{{ image.name }}"</h3>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Изображение "{{ jsonList[index].name }}"</h3>
             </blockquote>
             <figcaption class="flex items-center  justify-center space-x-3">
-              <img @click="image_click(image.name)"
+              <img @click="image_click(jsonList[index].name)"
                 class="w-80 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-600"
-                :src="image.url" alt="stop-cadr">
+                :src="jsonList[index].url" alt="stop-cadr">
               <div class="space-y-0.5 font-medium dark:text-white text-left">
-                <div>Класс: {{ image.class }}</div>
+                <div>Класс: {{ jsonList[index].class }}</div>
               </div>
             </figcaption>
 
