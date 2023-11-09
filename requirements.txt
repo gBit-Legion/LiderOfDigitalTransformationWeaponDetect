@@ -67,7 +67,6 @@ poetry==1.7.0
 poetry-core==1.8.1
 poetry-plugin-export==1.6.0
 psutil==5.9.6
-psycopg2==2.9.9
 ptyprocess==0.7.0
 py-cpuinfo==9.0.0
 pydantic
