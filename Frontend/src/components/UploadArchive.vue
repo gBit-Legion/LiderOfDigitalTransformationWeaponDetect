@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="px-[150px]">
       <p
-        class="text-idealDarkGray flex justify-center text-center text-6xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
+        class="text-idealDarkGray flex justify-center text-center text-4xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide"
       >
         ЗАГРУЗКА АРХИВА ВИДЕОЗАПИСЕЙ
       </p>
