@@ -12,6 +12,7 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 
 from Services.CodesForInteraction import *
+
 # from Services.TgBotKeeper import *
 
 app = FastAPI()
@@ -85,12 +86,12 @@ async def archive_upload(file: UploadFile):
             url = f"/processed_video/{file}"
             print(url)
             # print(os.listdir(os.path.join("./image", os.path.splitext(file)[0])))
-            # image_dir = os.listdir(f"../image/{os.path.splitext(file)[0]}")
+            image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
             #
             # print(os.listdir(os.path.join(f"./image,{os.path.splitext(file)[0]}")))
-            image_dirs = f"./image/{os.path.splitext(file)[0]}"
-            print(image_dirs)
-            image_dir = glob.glob(f"{image_dirs}/*.*")
+            # image_dirs = f"./image/{os.path.splitext(file)[0]}"
+            # print(image_dirs)
+            # image_dir = glob.glob(f"{image_dirs}/*.*")
             # with os.scandir(image_dirs) as entries:
             #     for entry in entries:
             #         if entry.is_file():
@@ -109,7 +110,7 @@ async def archive_upload(file: UploadFile):
                     "image_name": "no_weapon_detected",
                     "image_url": 0,
                     "class_name": "no_weapon_detected"
-                 }
+                }
                 result_list.append({"url": url, "image": result_image})
         print(result_list)
         return json.dumps(result_list)

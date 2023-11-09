@@ -33,8 +33,23 @@ from sklearn.model_selection import train_test_split
 ''' Код для получения видеофайлов из архива и их обработки '''
 
 
+def delete_tree(folder):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+
 def unarchived(file_name):
     zip_file_path = file_name
+
+    delete_tree("./video")
+    delete_tree("./image")
 
     extract_dir = './archive'
     print(extract_dir)
