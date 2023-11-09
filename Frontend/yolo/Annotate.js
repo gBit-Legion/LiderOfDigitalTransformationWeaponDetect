@@ -61,7 +61,7 @@
         e.preventDefault()
     }, false)
 
-    const isSupported = ()  => {
+    const isSupported = () => {
         try {
             const key = "__some_random_key_1234%(*^()^)___"
 
@@ -127,13 +127,13 @@
     const drawIntro = (context) => {
         setFontStyles(context, false)
         context.fillText("USAGE:", zoomX(20), zoomY(50))
-        context.fillText("1. Load your images (jpg, png). Might be slow if many or big.", zoomX(20), zoomY(100))
-        context.fillText("2. Load your classes (as in yolo *.names format) and create a .txt file of classes.", zoomX(20), zoomY(150))
-        context.fillText("3. Load or restore, if any, bboxes (zipped yolo/voc/coco files).", zoomX(20), zoomY(200))
+        context.fillText("1. Загрузите ваши изображения. Может быть медленно если их много или они большие.", zoomX(20), zoomY(100))
+        context.fillText("2. Загрузите классы (в формате YOLO *.names) и создайте txt файл классов", zoomX(20), zoomY(150))
+        context.fillText("3. Загрузите или восстановите, если есть, bboxes (архивированные yolo)", zoomX(20), zoomY(200))
         context.fillText("NOTES:", zoomX(20), zoomY(300))
-        context.fillText("1: Images and classes must be loaded before bbox load.", zoomX(20), zoomY(350))
-        context.fillText("2: Reloading images will RESET BBOXES!", zoomX(20), zoomY(400))
-        context.fillText("3: Check out README.md for more information.", zoomX(20), zoomY(450))
+        context.fillText("1: Изображения и классы должны быть заружены до bbox", zoomX(20), zoomY(350))
+        context.fillText("2: Перезагрузка изображений (загрузка новых) обнулит bboxes!", zoomX(20), zoomY(400))
+        context.fillText("3: Посмотрите Редми для большей информации", zoomX(20), zoomY(450))
     }
 
     const drawNewBbox = (context) => {
@@ -235,7 +235,7 @@
     }
 
     const listenCanvasMouse = () => {
-        canvas.element.addEventListener("wheel", trackWheel, {passive: false})
+        canvas.element.addEventListener("wheel", trackWheel, { passive: false })
         canvas.element.addEventListener("mousemove", trackPointer)
         canvas.element.addEventListener("mousedown", trackPointer)
         canvas.element.addEventListener("mouseup", trackPointer)
@@ -542,7 +542,7 @@
         }
     }
 
-    const panImage= (xx, yy) => {
+    const panImage = (xx, yy) => {
         if (mouse.buttonR === true) {
             canvasX -= mouse.realX - xx
             canvasY -= mouse.realY - yy
@@ -844,7 +844,7 @@
                         }
                     })
 
-                    if (extension === "txt" || extension === "xml"  || extension === "json") {
+                    if (extension === "txt" || extension === "xml" || extension === "json") {
                         reader.readAsText(files[i])
                     } else {
                         reader.readAsArrayBuffer(event.target.files[i])
@@ -1038,7 +1038,7 @@
                 zip.file(name.join("."), result.join("\n"))
             }
 
-            zip.generateAsync({type: "blob"})
+            zip.generateAsync({ type: "blob" })
                 .then((blob) => {
                     saveAs(blob, "bboxes_yolo.zip")
                 })
@@ -1104,7 +1104,7 @@
                 }
             }
 
-            zip.generateAsync({type: "blob"})
+            zip.generateAsync({ type: "blob" })
                 .then((blob) => {
                     saveAs(blob, "bboxes_voc.zip")
                 })
@@ -1171,7 +1171,7 @@
                 zip.file("coco.json", JSON.stringify(result))
             }
 
-            zip.generateAsync({type: "blob"})
+            zip.generateAsync({ type: "blob" })
                 .then((blob) => {
                     saveAs(blob, "bboxes_coco.zip")
                 })
@@ -1375,7 +1375,7 @@
                                     if (--x === 0) {
                                         document.body.style.cursor = "default"
 
-                                        zip.generateAsync({type: "blob"})
+                                        zip.generateAsync({ type: "blob" })
                                             .then((blob) => {
                                                 saveAs(blob, "crops.zip")
                                             })
