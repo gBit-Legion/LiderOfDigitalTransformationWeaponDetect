@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>YOLO Annotation Tool</title>
@@ -12,44 +13,51 @@
 
     <script src="Annotate.js"></script>
 </head>
+
 <body>
     <div class="container" id="container">
         <div class="left">
             <form action="">
-                <label for="images">Images:</label>
-                <input type="file" id="images" name="images[]" accept="image/jpeg, image/png" multiple />
-                <input type="button" name="cropImages" id="cropImages" value="Crop&Save" />
+                <div class="flex">
+                    <span for="images">Изображение:</span>
+                    <label class="input-file">
+                        <input type="file" id="images" name="images[]" accept="image/jpeg, image/png" multiple />
+                        <span>Выберите файл</span>
+                    </label>
+                </div>
 
-                <br />
-
-                <label for="imageSearch">Search:</label>
-                <input type="text" id="imageSearch" name="imageSearch" />
+                <div class="flex">
+                    <label for="imageSearch">Поиск:</label>
+                    <input type="text" id="imageSearch" name="imageSearch" />
+                </div>
 
                 <label for="imageList"></label><select name="imageList" id="imageList" size="10" multiple></select>
 
                 <div id="imageInformation"></div>
                 <hr />
 
-                <label for="classes">Classes:</label>
-                <input type="file" id="classes" name="classes" accept="text/plain" />
+                <div class="flex">
+                    <span for="classes">Classes:</span>
+                    <label class="input-file">
+                        <input type="file" id="classes" name="classes" accept="text/plain" />
+                        <span>Выберите файл</span>
+                    </label>
+                </div>
                 <label for="classList"></label><select name="classList" id="classList" size="10" multiple></select>
 
                 <div id="bboxInformation"></div>
                 <hr />
 
-                <label for="bboxes">Bboxes:</label>
-                <input type="file" id="bboxes" name="bboxes[]" accept="text/plain, application/zip" disabled multiple />
-                <input type="button" name="restoreBboxes" id="restoreBboxes" value="Restore" disabled />
-                <input type="button" name="saveBboxes" id="saveBboxes" value="Save YOLO" />
-
-                <div id="voc">
-                    <label for="vocFolder">Voc folder:</label>
-                    <input type="text" id="vocFolder" name="vocFolder" value="data" />
-                    <input type="button" name="saveVocBboxes" id="saveVocBboxes" value="Save VOC" />
-                    <input type="button" name="saveCocoBboxes" id="saveCocoBboxes" value="Save COCO" />
+                <div class="flex">
+                    <span for="bboxes">Bboxes:</span>
+                    <label class="input-file">
+                        <input type="file" id="bboxes" name="bboxes[]" accept="text/plain, application/zip" multiple />
+                        <span>Выберите файл</span>
+                    </label>
                 </div>
-                <div id="coco">
-
+                <div class="flex">
+                    <input type="button" name="restoreBboxes" id="restoreBboxes" value="Restore" disabled />
+                    <input type="button" name="saveBboxes" id="saveBboxes" value="Save YOLO" />
                 </div>
                 <hr />
 
@@ -57,31 +65,24 @@
                     SHORTCUTS:
                     <ul>
                         <li>
-                            Mouse WHEEL - zoom in/out image
+                        <span>КОЛЕСИКО мыши - увеличение / уменьшение масштаба изображения</span>
                         </li>
                         <li>
-                            Mouse RIGHT BUTTON - pan image
+                           <span>ПРАВАЯ КНОПКА мыши - панорамирование изображения</span>
                         </li>
-                        <li>
-                            Arrows LEFT and RIGHT - cycle images
-                        </li>
-                        <li>
-                            Arrows Up and DOWN - cycle classes
-                        </li>
-                        <li>
-                            Key DELETE - remove selected Bbox
-                        </li>
-                    </ul>
-
-                    <p>Version: 0.2.4 | Copyright © 2018-2019 Draining Sun.</p>
                 </div>
             </form>
         </div>
 
+
         <div class="right" id="right">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas" width="1000px"></canvas>
             <canvas id="hiddenCanvas"></canvas>
         </div>
     </div>
+
+    <script>
+    </script>
 </body>
+
 </html>
