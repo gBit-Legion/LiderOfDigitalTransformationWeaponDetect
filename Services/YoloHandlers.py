@@ -37,9 +37,8 @@ class VideoProcessor:
             futures = []
             for video_file in video_files:
                 input_file = os.path.join(self.input_folder, video_file)
-                output_file = os.path.join(self.output_folder, f'processed_{video_file}')
-                save_frames_folder = os.path.join(self.save_frames_folder,
-                                                  f'{video_file}_frames')  # Новая папка для сохранения фреймов
+                output_file = os.path.join(self.output_folder, f'{video_file}')
+                save_frames_folder = os.path.join(self.save_frames_folder, f'{os.path.splitext(video_file)[0]}')  # Новая папка для сохранения фреймов
                 futures.append(executor.submit(self.process_video, input_file, output_file, save_frames_folder))
 
             ''' Ожидание завершения всех потоков '''

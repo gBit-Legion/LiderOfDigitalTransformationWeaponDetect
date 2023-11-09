@@ -1,6 +1,6 @@
+import glob
 import json
 import os
-from multiprocessing import Process
 
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Form, routing
@@ -12,12 +12,11 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 
 from Services.CodesForInteraction import *
-from Services.TgBotKeeper import *
+# from Services.TgBotKeeper import *
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="./Frontend/yolo"), name='static')
-
 
 origins = ["*"]
 app.add_middleware(
@@ -27,6 +26,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Запуск процесса для обработки файла
 # p = Process(target=bot_start)
@@ -66,6 +66,7 @@ async def archive_upload(file: UploadFile):
         print("Папка уже существует.")
 
     file_path = Path("./archive", file.filename)
+    print(file_path)
 
     result_list = []
 
@@ -75,14 +76,28 @@ async def archive_upload(file: UploadFile):
         unarchived(file_path)
         try:
             list_dir = os.listdir("./video")
+
         except Exception as e:
             return {"directory_video_is_empty": e.args}
 
         for file in list_dir:
+            print(file)
             url = f"/processed_video/{file}"
-
-            image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
+            print(url)
+            # print(os.listdir(os.path.join("./image", os.path.splitext(file)[0])))
+            # image_dir = os.listdir(f"../image/{os.path.splitext(file)[0]}")
+            #
+            # print(os.listdir(os.path.join(f"./image,{os.path.splitext(file)[0]}")))
+            image_dirs = f"./image/{os.path.splitext(file)[0]}"
+            print(image_dirs)
+            image_dir = glob.glob(f"{image_dirs}/*.*")
+            # with os.scandir(image_dirs) as entries:
+            #     for entry in entries:
+            #         if entry.is_file():
+            #             image_dir = entry.name
+            # print(image_dir)
             if len(image_dir) != 0:
+
                 for image in image_dir:
                     result_image = {"image_name": os.path.splitext(image)[0],
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
@@ -90,7 +105,11 @@ async def archive_upload(file: UploadFile):
                                     }
                     result_list.append({"url": url, "image": result_image})
             else:
-                result_image = {"image_name": "no_weapon_detected"}
+                result_image = {
+                    "image_name": "no_weapon_detected",
+                    "image_url": 0,
+                    "class_name": "no_weapon_detected"
+                 }
                 result_list.append({"url": url, "image": result_image})
         print(result_list)
         return json.dumps(result_list)

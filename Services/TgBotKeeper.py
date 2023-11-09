@@ -1,70 +1,76 @@
 import telebot
-import threading
+from geopy.distance import geodesic
 from telebot import types
+from geopy.geocoders import Nominatim
 from loguru import logger
 
 TOKEN = '6817771962:AAFTKHg8UbU7Dy4Hnw0ySMvo9EBRLFBPRuo'
 bot = telebot.TeleBot(TOKEN)
 logger.success('telega is started')
 
-# Словарь для хранения данных о трансляции местоположения для каждого чата
-location_transmissions = {}
 
-
-def stop_location_transmission(chat_id):
-    if chat_id in location_transmissions:
-        # Остановка трансляции местоположения
-        location_transmissions.pop(chat_id)
-        print(f"Трансляция местоположения для чата {chat_id} завершена. Спасибо!")
-    else:
-        print(f"Трансляция местоположения для чата {chat_id} не активна.")
-
-
+# Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def start(message):
-    chat_id = message.chat.id
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-    button = types.KeyboardButton(text="Запустить трансляцию местоположения 📍", request_location=True)
-    markup.add(button)
-    bot.send_message(chat_id,
-                     "Привет! Я могу транслировать ваше местоположение в реальном времени. Нажмите кнопку ниже, чтобы начать.",
-                     reply_markup=markup)
+    bot.reply_to(message,
+                 'Отправьте любое фото (имитация отправки изображения с маркированным подозрительным объектом)')
 
 
-@bot.message_handler(func=lambda message: True, content_types=['location'])
-def handle_location(message):
-    chat_id = message.chat.id
-    latitude = message.location.latitude
-    longitude = message.location.longitude
+# Обработчик фотографии
+@bot.message_handler(content_types=['photo'])
+def handle_photo(message):
+    # Проверяем, что у фотографии есть координаты
+    if message.photo[-1].file_id:
+        # Получаем координаты фотографии
+        photo_latitude = 60.033158  # Заменить на фактические координаты фотографии
+        photo_longitude = 30.238523  # Заменить на фактические координаты фотографии
 
-    if chat_id in location_transmissions:
-        # Обновление уже существующей трансляции местоположения
-        location_transmissions[chat_id] = (latitude, longitude)
+        def get_address(latitude, longitude):
+            geolocator = Nominatim(user_agent="location")
+            location = geolocator.reverse((latitude, longitude))
+            address = location.address
+            return address
+
+        latitude = photo_latitude
+        longitude = photo_longitude
+
+        address = get_address(latitude, longitude)
+        print(address)
+        # Отправляем фотографию с координатами
+        bot.send_photo(message.chat.id, message.photo[-1].file_id,
+                       caption=f'Адрес: {address}')  # caption=f'Координаты: {photo_latitude}, {photo_longitude}')
+
+        # Запрашиваем текущее местоположение пользователя
+
+        chat_id = message.chat.id
+        markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+        button = types.KeyboardButton(text="Поделиться местоположением 📍", request_location=True)
+        markup.add(button)
+        bot.send_message(chat_id, "‼️‼️‼️ВНИМАНИЕ‼️‼️‼️ "
+                                  "Был обнаружен подозрительный объект "
+                                  "Отправьте свое местоположение и я рассчитаю расстояние до него.",
+                         reply_markup=markup)
+
+        # bot.send_message(message.chat.id, 'Пожалуйста, отправьте ваше текущее местоположение:')
+        bot.register_next_step_handler(message, calculate_distance, photo_latitude, photo_longitude)
     else:
-        # Создание новой трансляции местоположения
-        location_transmissions[chat_id] = (latitude, longitude)
-
-        # Запуск таймера на завершение трансляции через 8 часов
-        threading.Timer(28800, stop_location_transmission, args=[chat_id]).start()
-
-    # Вывод текущих координат в консоль
-    print(f"Текущее местоположение для чата {chat_id}: Широта: {latitude}, Долгота: {longitude}")
-
-    # Запуск таймера на обновление местоположения каждые 10 секунд
-    threading.Timer(10, update_location, args=[chat_id]).start()
+        bot.reply_to(message, 'У фото отсутствуют координаты.')
 
 
-def update_location(chat_id):
-    if chat_id in location_transmissions:
-        # Получение текущего местоположения из словаря
-        latitude, longitude = location_transmissions[chat_id]
+# Обработчик геопозиции пользователя
+def calculate_distance(message, photo_latitude, photo_longitude):
+    # Получаем координаты пользователя из геопозиции
+    user_latitude = message.location.latitude
+    user_longitude = message.location.longitude
+    # Выводим ник и координаты пользователя в консоль
+    print(f'Имя пользователя: {message.chat.username}')
+    print(f'Координаты пользователя: {user_latitude}, {user_longitude}')
+    # Вычисляем расстояние между координатами
+    distance = geodesic((photo_latitude, photo_longitude), (user_latitude, user_longitude)).meters
+    rounded_distance = round(distance)
+    # Отправляем ответ с расстоянием
+    bot.send_message(message.chat.id, f'Расстояние между объектом и вашим местоположением: {rounded_distance} м')
 
-        # Вывод обновленных координат в консоль
-        print(f"Обновленное местоположение для чата {chat_id}: Широта: {latitude}, Долгота: {longitude}")
 
-        # Запуск таймера на следующее обновление местоположения
-        threading.Timer(10, update_location, args=[chat_id]).start()
-
-
-def bot_start():
-    bot.polling(none_stop=True)
+# Прослушивание новых сообщений
+#bot.polling(none_stop=True)

@@ -9,7 +9,6 @@ import os
 
 from sklearn.model_selection import train_test_split
 
-
 # ''' Путь к архиву с лейблами '''
 # lables_zip_file_path = 'C:/Users/mides/Downloads/bboxes_yolo.zip'
 # ''' Путь куда нужно переместить лейблы из архива '''
@@ -45,21 +44,21 @@ def unarchived(file_name):
 
     """ Разархивируем файлы в указанный каталог """
     zip_extractor.extract_files(extract_dir)
-    os.remove(file_name)
-    print(1)
+
     ''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
 
     input_folder = './archive'
     output_folder = './video'
-    print(2)
+
     processor = VideoProcessor(input_folder, output_folder, "./image")
     processor.process_videos()
-    for filename in os.listdir("./archive"):
-        file_path = os.path.join("./archive", filename)
-        # Проверяем, является ли объект файлом
-        if os.path.isfile(file_path):
-            # Удаляем файл
-            os.remove(file_path)
+    if len(os.listdir("./archive")) != 0:
+        for filename in os.listdir("./archive"):
+            file_path = os.path.join("./archive/", filename)
+            # Проверяем, является ли объект файлом
+            if os.path.isfile(file_path):
+                # Удаляем файл
+                os.remove(file_path)
 
 
 ''' ------------------------------------------------------ '''
