@@ -35,10 +35,10 @@ class VideoProcessor:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             ''' Запуск обработки каждого видео в отдельном потоке '''
             futures = []
-            for video_file in video_files:
-                input_file = os.path.join(self.input_folder, video_file)
-                output_file = os.path.join(self.output_folder, f'{video_file}')
-                save_frames_folder = os.path.join(self.save_frames_folder, f'{os.path.splitext(video_file)[0]}')  # Новая папка для сохранения фреймов
+            for self.video_file in video_files:
+                input_file = os.path.join(self.input_folder, self.video_file)
+                output_file = os.path.join(self.output_folder, f'{self.video_file}')
+                save_frames_folder = os.path.join(self.save_frames_folder, f'{os.path.splitext(self.video_file)[0]}')  # Новая папка для сохранения фреймов
                 futures.append(executor.submit(self.process_video, input_file, output_file, save_frames_folder))
 
             ''' Ожидание завершения всех потоков '''
@@ -64,7 +64,7 @@ class VideoProcessor:
             os.makedirs(save_frames_folder)
 
         ''' Создание объекта VideoWriter для записи нового видеофайла '''
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        fourcc = cv2.VideoWriter_fourcc(*'MP4T')
         out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
         frame_count = 0
 
@@ -74,7 +74,7 @@ class VideoProcessor:
 
             if ret:
                 ''' Обработка моделью (Предварительно) '''
-                result = model(frame, save_txt=True, save_crop=True)
+                result = model(frame)
 
                 for result_item in result:
                     boxes = result_item.boxes.cpu().numpy()
@@ -100,7 +100,7 @@ class VideoProcessor:
                         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
 
                         if frame_count % 60 == 0:  # Сохранение только каждого 60-го фрейма в папку
-                            save_frame_path = os.path.join(save_frames_folder, f'frame_{frame_count}.jpg')
+                            save_frame_path = os.path.join(save_frames_folder, f'{os.path.splitext(self.video_file)[0]}_frame_{frame_count}.jpg')
                             cv2.imwrite(save_frame_path, frame)
 
                         frame_count += 1
