@@ -68,7 +68,7 @@ def unarchived(file_name):
     input_folder = './archive'
     output_folder = './video'
 
-    processor = VideoProcessor(input_folder, output_folder, "./image")
+    processor = VideoProcessor(input_folder, output_folder, "./image", "./labels")
     processor.process_videos()
     if len(os.listdir("./archive")) != 0:
         for filename in os.listdir("./archive"):
