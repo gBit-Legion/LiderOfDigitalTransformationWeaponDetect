@@ -12,7 +12,6 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 from starlette.responses import StreamingResponse
 
-from Services import TgBotKeeper
 from Services.CodesForInteraction import *
 
 app = FastAPI()
@@ -42,7 +41,6 @@ async def serve_video(camera_id: int):
 @app.post("/getlist")
 async def get_list_checked_file(req: Request):
     json_data = await req.json()
-    print(json_data)
     return "good"
 
 
@@ -102,18 +100,19 @@ async def archive_upload(file: UploadFile):
             label_list = []
             if len(image_dir) != 0:
 
-                for image, label in image_dir, labels_dir:
-                    with open(label, 'r') as file:
-                        for line in file:
-                            first_part = line.split(' ', 1)[0]
-                            if first_part == '0':
-                                label_list.append("knife")
-                            elif first_part == '1':
-                                label_list.append("pistol")
-                            elif first_part == '2':
-                                label_list.append("gun")
-                            elif first_part == '3':
-                                label_list.append("riffle")
+                for image in image_dir:
+                    for label in labels_dir
+                        with open(label, 'r') as file:
+                            for line in file:
+                                first_part = line.split(' ', 1)[0]
+                                if first_part == '0':
+                                    label_list.append("knife")
+                                elif first_part == '1':
+                                    label_list.append("pistol")
+                                elif first_part == '2':
+                                    label_list.append("gun")
+                                elif first_part == '3':
+                                    label_list.append("riffle")
                     result_image = {"image_name": os.path.splitext(image)[0],
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
                                     "class_name": label_list
