@@ -1,10 +1,9 @@
-
 import json
 from multiprocessing import Process
 
 import uvicorn
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI, Form, routing
+from fastapi import FastAPI, Request, routing
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import UploadFile
@@ -39,9 +38,14 @@ async def return_html_file(filename: str):
 async def serve_video(camera_id: int):
     return StreamingResponse()
 
-@app.post()
-def get_list_cheked_file()
+
+@app.post("/getlist")
+async def get_list_checked_file(req: Request):
+    json_data = await req.json()
+    print(json_data)
     return "good"
+
+
 @app.post('/excel')
 async def file_uploader(file: UploadFile):
     if not os.path.exists("./upload"):
@@ -170,4 +174,3 @@ def get_static_image(filename: str, video_name: str):
 
 
 app.include_router(static_router)
-
