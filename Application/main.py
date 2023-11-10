@@ -13,6 +13,7 @@ from fastapi.routing import APIRoute
 from starlette.responses import StreamingResponse
 
 from Services.CodesForInteraction import *
+from Database.querry_to_database import *
 
 app = FastAPI()
 
@@ -35,12 +36,15 @@ async def return_html_file(filename: str):
 
 @app.get("/serve/{camera_id}", include_in_schema=False)
 async def serve_video(camera_id: int):
+    url = id_to_url(camera_id)
+    
     return StreamingResponse()
 
 
 @app.post("/getlist")
 async def get_list_checked_file(req: Request):
     json_data = await req.json()
+    print(json_data)
     return "good"
 
 

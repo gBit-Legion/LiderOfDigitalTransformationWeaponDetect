@@ -19,8 +19,8 @@ class TableParser:
         next(rows)
         """ Собираем данные со строк """
         for row in rows:
-            data.append(list(row))
-        return data
+            self.data.append(list(row))
+        return self.data
 
 
 
