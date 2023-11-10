@@ -1,6 +1,6 @@
-import glob
+
 import json
-import os
+from multiprocessing import Process
 
 import uvicorn
 from fastapi.staticfiles import StaticFiles
@@ -13,6 +13,7 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 from starlette.responses import StreamingResponse
 
+from Services import TgBotKeeper
 from Services.CodesForInteraction import *
 
 app = FastAPI()
@@ -28,11 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Запуск процесса для обработки файла
-# p = Process(target=bot_start)
-# p.start()
-# p.join()
 
 @app.get("/static/{filename}")
 async def return_html_file(filename: str):
@@ -153,3 +149,4 @@ def get_static_image(filename: str, video_name: str):
 
 
 app.include_router(static_router)
+

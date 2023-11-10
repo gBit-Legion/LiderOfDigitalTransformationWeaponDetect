@@ -32,3 +32,8 @@ services:
       - ./Database/DB.env
     ports:
       - 5432:5432
+  bot:
+    container_name: tgbot
+    build: ./Services/
+    depends_on:
+      - backend
