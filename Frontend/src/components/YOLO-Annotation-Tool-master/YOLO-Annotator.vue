@@ -1,6 +1,6 @@
 <template>
     <body class="body">
-        <iframe :src="url" width="1200vh" height="800px" frameborder="0"></iframe>
+        <iframe :url="url" width="1200vh" height="800px" frameborder="0"></iframe>
     </body>
 </template>
 <script>

@@ -15,9 +15,6 @@
         <div class="mb-4">
           <Map :postamat_list="allpostamats"></Map>
         </div>
-        <div>
-          <RightDropSidebar />
-        </div>
       </div>
     </transition>
 
@@ -70,7 +67,6 @@ import Map from "@/components/Map.vue";
 import DropDownOffice from "@/components/DropDownOffice.vue";
 import axios from "axios";
 import VideoDet from "./VideoDet.vue";
-import RightDropSidebar from "@/components/RightDropSidebar.vue";
 import UploadForm from "@/components/UploadForm.vue";
 import YOLOAnnotator from './YOLO-Annotation-Tool-master/YOLO-Annotator.vue';
 import UploadTableExampleVue from './UploadTableExample.vue';
@@ -79,7 +75,6 @@ export default {
   components: {
     VideoDet,
     Map,
-    RightDropSidebar,
     UploadForm,
     DropDownOffice,
     YOLOAnnotator,

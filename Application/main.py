@@ -2,6 +2,7 @@ import glob
 import json
 import os
 
+import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Form, routing
 from fastapi.responses import FileResponse, HTMLResponse
@@ -13,8 +14,6 @@ from fastapi.routing import APIRoute
 from starlette.responses import StreamingResponse
 
 from Services.CodesForInteraction import *
-
-# from Services.TgBotKeeper import *
 
 app = FastAPI()
 
@@ -71,6 +70,8 @@ async def archive_upload(file: UploadFile):
         print("Папка успешно создана!")
     else:
         print("Папка уже существует.")
+    if not os.path.exists("./image"):
+        os.makedirs("./image")
 
     file_path = Path("./archive", file.filename)
     print(file_path)
@@ -91,9 +92,9 @@ async def archive_upload(file: UploadFile):
             print(file)
             url = f"/processed_video/{file}"
             print(url)
-            # print(os.listdir(os.path.join("./image", os.path.splitext(file)[0])))
             image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
             result_image = []
+
             if len(image_dir) != 0:
 
                 for image in image_dir:

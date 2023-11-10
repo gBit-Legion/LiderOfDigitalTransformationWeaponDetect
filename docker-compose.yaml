@@ -5,6 +5,8 @@ services:
     restart: always
 
     container_name: Front
+    env_file:
+      - ./Frontend/.env
     build:
       context: ./Frontend
       dockerfile: Dockerfile
