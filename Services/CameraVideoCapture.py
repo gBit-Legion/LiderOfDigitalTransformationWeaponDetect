@@ -1,19 +1,8 @@
-import cv2
+from Services.yolo_connet import *
 import concurrent.futures
-from ultralytics import YOLO
+
 import os
 
-model = YOLO("./best.pt")
-class_colors = \
-    {
-        0: (255, 0, 0),
-        1: (0, 255, 0),
-        2: (0, 0, 255),
-        3: (255, 255, 0)
-    }
-
-class_font = cv2.FONT_HERSHEY_SIMPLEX
-class_font_scale = 1.2
 
 class RTSPCamera:
     def __init__(self, rtsp_links):
@@ -76,11 +65,5 @@ class RTSPCamera:
         capture.release()
         cv2.destroyWindow(window_name)
 
-rtsp_links = ['rtsp://admin:A1234567@188.170.176.190:8031/Streaming/Channels/101?transportmode=unicast&profile=Profile_1',
-              'rtsp://26.114.135.146:8554/streaming']
-
-rtsp_camera = RTSPCamera(rtsp_links)
-
-for frame in rtsp_camera.process_videos():
-    # Обрабатывай фреймы здесь #
-    pass
+# rtsp_links = ['rtsp://admin:A1234567@188.170.176.190:8031/Streaming/Channels/101?transportmode=unicast&profile=Profile_1',
+#               'rtsp://26.114.135.146:8554/streaming']

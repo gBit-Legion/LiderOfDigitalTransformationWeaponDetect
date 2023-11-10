@@ -4,19 +4,9 @@ import concurrent.futures
 
 import torch.cuda
 from ultralytics import YOLO
+
 # import torch
-
-model = YOLO("./ML_AI_NN/best.pt")
-class_colors = \
-    {
-        0: (255, 0, 0),
-        1: (0, 255, 0),
-        2: (0, 0, 255),
-        3: (255, 255, 0)
-    }
-
-class_font = cv2.FONT_HERSHEY_SIMPLEX
-class_font_scale = 1.2
+from Services.yolo_connet import *
 
 
 class VideoProcessor:
@@ -43,9 +33,11 @@ class VideoProcessor:
             for self.video_file in video_files:
                 input_file = os.path.join(self.input_folder, self.video_file)
                 output_file = os.path.join(self.output_folder, f'{self.video_file}')
-                save_frames_folder = os.path.join(self.save_frames_folder, f'{os.path.splitext(self.video_file)[0]}')  # Новая папка для сохранения фреймов
+                save_frames_folder = os.path.join(self.save_frames_folder,
+                                                  f'{os.path.splitext(self.video_file)[0]}')  # Новая папка для сохранения фреймов
                 save_labels_folder = os.path.join(self.save_labels_folder, f'{os.path.splitext(self.video_file)[0]}')
-                futures.append(executor.submit(self.process_video, input_file, output_file, save_frames_folder, save_labels_folder))
+                futures.append(executor.submit(self.process_video, input_file, output_file, save_frames_folder,
+                                               save_labels_folder))
 
             ''' Ожидание завершения всех потоков '''
             for future in concurrent.futures.as_completed(futures):
@@ -110,7 +102,8 @@ class VideoProcessor:
 
                         if frame_count % 30 == 0:  # Сохранение только каждого 30-го фрейма в папку
 
-                            save_frame_path = os.path.join(save_frames_folder, f'{os.path.splitext(self.video_file)[0]}_frame_{frame_count}.jpg')
+                            save_frame_path = os.path.join(save_frames_folder,
+                                                           f'{os.path.splitext(self.video_file)[0]}_frame_{frame_count}.jpg')
                             cv2.imwrite(save_frame_path, frame)
 
                             ''' Сохранение параметров bounding box в формате YOLO '''

@@ -1,7 +1,7 @@
+import asyncio
 import json
-from multiprocessing import Process
+import os
 
-import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, routing
 from fastapi.responses import FileResponse, HTMLResponse
@@ -12,6 +12,7 @@ from pathlib import Path
 from fastapi.routing import APIRoute
 from starlette.responses import StreamingResponse
 
+from Services.CameraVideoCapture import RTSPCamera
 from Services.CodesForInteraction import *
 from Database.querry_to_database import *
 
@@ -36,9 +37,19 @@ async def return_html_file(filename: str):
 
 @app.get("/serve/{camera_id}", include_in_schema=False)
 async def serve_video(camera_id: int):
-    url = id_to_url(camera_id)
-    
-    return StreamingResponse()
+    # url = id_to_url(camera_id)
+    url = ['rtsp://26.114.135.146:8554/streaming']
+    rtsp_camera = RTSPCamera(url)
+
+    async def video_stream():
+        for frame in rtsp_camera.process_videos():
+            frame_bytes = frame.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
+            # Give control back to the event loop to allow other tasks to run
+            await asyncio.sleep(0)
+
+    return StreamingResponse(video_stream(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 
 @app.post("/getlist")
@@ -61,7 +72,9 @@ async def file_uploader(file: UploadFile):
     try:
         with open(file_path, "wb") as f:
             f.write(file.file.read())
-        return {"message": "File saved successfully"}
+        url_id_list = add_in_dataset(f"./upload/{file.filename}")
+        os.remove("./upload/{file.filename}")
+        return {"message": url_id_list}
 
     except Exception as e:
         return {"message": e.args}

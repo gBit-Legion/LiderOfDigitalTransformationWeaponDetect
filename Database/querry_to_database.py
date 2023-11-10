@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session, sessionmaker
-from Database.database_connect import engine
-from sqlalchemy.orm.query import Query
-from Database.models import *
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from Services.TableParser import TableParser
 from Services.random_addres_generator import address_generator
-from models import CameraObject
+from Database.models import CameraObject
+
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123@localhost/5432"
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 
 def add_in_dataset(file_path):
