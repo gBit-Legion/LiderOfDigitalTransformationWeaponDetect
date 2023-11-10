@@ -89,11 +89,13 @@ async def archive_upload(file: UploadFile):
             url = f"/processed_video/{file}"
             print(url)
             image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
+            labels_dir = os.listdir(f"./labels/{os.path.splitext(file)[0]}")
             result_image = []
 
             if len(image_dir) != 0:
 
-                for image in image_dir:
+                for image, label in image_dir, labels_dir:
+
                     result_image = {"image_name": os.path.splitext(image)[0],
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
                                     "class_name": "riffle"
