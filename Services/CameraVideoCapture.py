@@ -7,7 +7,6 @@ import os
 class RTSPCamera:
     def __init__(self, rtsp_links, save_labels_folder, save_frames_folder):
         self.rtsp_links = rtsp_links
-        self.window_names = [f'Video Stream {index}' for index in range(len(rtsp_links))]
         self.save_labels_folder = save_labels_folder
         self.save_frames_folder = save_frames_folder
 
@@ -33,16 +32,13 @@ class RTSPCamera:
 
     def process_video(self, rtsp_link, index, save_frames_folder, save_labels_folder):
         capture = cv2.VideoCapture(rtsp_link)
-        capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
-        capture.set(cv2.CAP_PROP_POS_MSEC, 5000)
+        capture.set(cv2.CAP_PROP_POS_MSEC, 100)
 
         if not capture.isOpened():
             raise Exception(f'Failed to open RTSP link: {rtsp_link}')
-
-        window_name = self.window_names[index]
-        cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
         frame_count = 0
 
@@ -89,7 +85,7 @@ class RTSPCamera:
 
                         frame_count += 1
 
-                cv2.imshow(window_name, frame)
+                yield frame
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
@@ -98,7 +94,18 @@ class RTSPCamera:
                 break
 
         capture.release()
-        cv2.destroyWindow(window_name)
 
 # rtsp_links = ['rtsp://admin:A1234567@188.170.176.190:8031/Streaming/Channels/101?transportmode=unicast&profile=Profile_1',
 #               'rtsp://26.114.135.146:8554/streaming']
+
+# video_processor = RTSPCamera(rtsp_links, save_labels_folder, save_frames_folder)
+#
+# while True:
+#     for frame in video_processor.process_videos():
+#         frame_np = np.array(next(frame)).astype(np.uint8)
+#
+#         cv2.imshow("Frame", frame_np)
+#         if cv2.waitKey(1) & 0xFF == ord('q'):
+#             break
+#
+# cv2.destroyAllWindows()
