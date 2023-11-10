@@ -9,9 +9,10 @@ services:
       - ./Frontend/.env
     build:
       context: ./Frontend
-      dockerfile: Dockerfile
-    expose:
+    ports:
       - 8080:8080
+    expose:
+      - 8080
 
   backend:
     restart: always
