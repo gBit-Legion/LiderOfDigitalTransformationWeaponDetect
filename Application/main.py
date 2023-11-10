@@ -89,34 +89,34 @@ async def archive_upload(file: UploadFile):
             return {"directory_video_is_empty": e.args}
 
         for file in list_dir:
-            print(file)
+            # print(file)
             url = f"/processed_video/{file}"
-            print(url)
+            # print(url)
             image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
             labels_dir = os.listdir(f"./labels/{os.path.splitext(file)[0]}")
             result_image = []
-
             img_list = []
             label_list = []
-            if len(image_dir) != 0:
 
-                for image in image_dir:
-                    for label in labels_dir
-                        with open(label, 'r') as file:
-                            for line in file:
-                                first_part = line.split(' ', 1)[0]
-                                if first_part == '0':
-                                    label_list.append("knife")
-                                elif first_part == '1':
-                                    label_list.append("pistol")
-                                elif first_part == '2':
-                                    label_list.append("gun")
-                                elif first_part == '3':
-                                    label_list.append("riffle")
+            if len(image_dir) != 0:
+                for image, label in zip(image_dir, labels_dir):
+                    with open(f'./labels/{os.path.splitext(file)[0]}/{label}', 'r') as file1:
+                        for line in file1:
+                            first_part = line.split(' ', 1)[0]
+                            if first_part == '0':
+                                label_list.append("knife")
+                            elif first_part == '1':
+                                label_list.append("pistol")
+                            elif first_part == '2':
+                                label_list.append("gun")
+                            elif first_part == '3':
+                                label_list.append("riffle")
+
                     result_image = {"image_name": os.path.splitext(image)[0],
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
                                     "class_name": label_list
                                     }
+
                     # result_list.append({"url": url, "image": result_image})
                     img_list.append(result_image)
             else:
@@ -130,7 +130,8 @@ async def archive_upload(file: UploadFile):
 
             result_list.append({"url": url, "images": img_list})
 
-        print(result_list)
+            print(result_list)
+
         return json.dumps(result_list)
     except Exception as e:
         return {"message": e.args}
