@@ -1,6 +1,8 @@
 import os
 import cv2
 import concurrent.futures
+
+import torch.cuda
 from ultralytics import YOLO
 # import torch
 
@@ -82,6 +84,7 @@ class VideoProcessor:
 
             if ret:
                 ''' Обработка моделью '''
+
                 # if torch.cuda.is_available:
                 #     result = model(frame, device=0)
                 # else:

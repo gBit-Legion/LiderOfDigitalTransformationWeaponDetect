@@ -41,7 +41,6 @@ async def serve_video(camera_id: int):
 @app.post("/getlist")
 async def get_list_checked_file(req: Request):
     json_data = await req.json()
-    print(json_data)
     return "good"
 
 
