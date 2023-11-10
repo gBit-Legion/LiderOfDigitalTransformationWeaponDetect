@@ -35,20 +35,22 @@ async def return_html_file(filename: str):
     return FileResponse(f"./Frontend/yolo/{filename}")
 
 
-@app.get("/serve/{camera_id}", include_in_schema=False)
+@app.get("/serve/{camera_id}")
 async def serve_video(camera_id: int):
-    # url = id_to_url(camera_id)
     url = ['rtsp://26.114.135.146:8554/streaming']
     rtsp_camera = RTSPCamera(url)
 
     async def video_stream():
-        for frame in rtsp_camera.process_videos():
-            frame_bytes = frame.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
-            # Give control back to the event loop to allow other tasks to run
-            await asyncio.sleep(0)
+        while True:
+            frame = rtsp_camera.process_videos()
 
+            if frame is not None:
+                # Преобразуйте кадр в байты
+                frame_bytes = frame.tobytes()
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
+
+    # Создайте стрим-ответ с использованием функции video_stream в качестве генератора данных
     return StreamingResponse(video_stream(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 
