@@ -92,6 +92,7 @@ async def archive_upload(file: UploadFile):
             labels_dir = os.listdir(f"./labels/{os.path.splitext(file)[0]}")
             result_image = []
 
+            img_list = []
             if len(image_dir) != 0:
 
                 for image, label in image_dir, labels_dir:
@@ -100,14 +101,19 @@ async def archive_upload(file: UploadFile):
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
                                     "class_name": "riffle"
                                     }
-                    result_list.append({"url": url, "image": result_image})
+                    # result_list.append({"url": url, "image": result_image})
+                    img_list.append(result_image)
             else:
                 result_image = {
                     "image_name": "no_weapon_detected",
                     "image_url": 0,
                     "class_name": "no_weapon_detected"
                 }
-                result_list.append({"url": url, "image": result_image})
+                # result_list.append({"url": url, "image": result_image})
+                img_list.append(result_image)
+
+            result_list.append({"url": url, "images": img_list})
+
         print(result_list)
         return json.dumps(result_list)
     except Exception as e:
