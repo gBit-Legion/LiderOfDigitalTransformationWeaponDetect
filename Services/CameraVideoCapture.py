@@ -5,21 +5,38 @@ import os
 
 
 class RTSPCamera:
-    def __init__(self, rtsp_links):
+    def __init__(self, rtsp_links, save_labels_folder, save_frames_folder):
         self.rtsp_links = rtsp_links
         self.window_names = [f'Video Stream {index}' for index in range(len(rtsp_links))]
+        self.save_labels_folder = save_labels_folder
+        self.save_frames_folder = save_frames_folder
 
     def process_videos(self):
+        if not os.path.exists(self.save_frames_folder):
+            os.makedirs(self.save_frames_folder)
+        if not os.path.exists(self.save_labels_folder):
+            os.makedirs(self.save_labels_folder)
+
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
             for index, rtsp_link in enumerate(self.rtsp_links):
-                futures.append(executor.submit(self.process_video, rtsp_link, index))
+                save_frames_folder = os.path.join(self.save_frames_folder, f'camera_{index + 1}')
+                save_labels_folder = os.path.join(self.save_labels_folder, f'camera_{index + 1}')
+                futures.append(executor.submit(self.process_video, rtsp_link, index, save_frames_folder,
+                                               save_labels_folder))
 
-            for _ in concurrent.futures.as_completed(futures):
-                pass
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    yield future.result()
+                except Exception as e:
+                    print(f"Error processing video: {e}")
 
-    def process_video(self, rtsp_link, index):
+    def process_video(self, rtsp_link, index, save_frames_folder, save_labels_folder):
         capture = cv2.VideoCapture(rtsp_link)
+        capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+        capture.set(cv2.CAP_PROP_POS_MSEC, 5000)
 
         if not capture.isOpened():
             raise Exception(f'Failed to open RTSP link: {rtsp_link}')
@@ -27,38 +44,56 @@ class RTSPCamera:
         window_name = self.window_names[index]
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
+        frame_count = 0
+
         class_labels = ['knife', 'pistol', 'gun', 'riffle']
 
-        while capture.isOpened():
+        while True:
             ret, frame = capture.read()
 
             if ret:
                 result = model(frame, conf=0.3)
 
-                for result_item in result:
-                    boxes = result_item.boxes.cpu().numpy()
+                for result_item in result[0]:
+                    boxes = result_item[:, :4].cpu().numpy()
+                    classes = result_item[:, 5].cpu().numpy()
+                    confidences = result_item[:, 4].cpu().numpy()
 
-                    for box in boxes:
-                        r = box.xyxy[0].astype(int)
-                        cls = box.cls[0].astype(int)
-
-                        conf = round(box.conf[0].astype(float), 2)
+                    for box, cls, conf in zip(boxes, classes, confidences):
+                        x1, y1, x2, y2 = box.astype(int)
+                        cls = int(cls)
+                        conf = round(float(conf), 2)
 
                         label = class_labels[cls] + str(conf)
                         box_color = class_colors.get(cls, (255, 255, 255))
 
                         (label_width, label_height), _ = cv2.getTextSize(label, class_font, class_font_scale, 1)
-                        text_position = (r[0], r[1] - 3 - label_height)
+                        text_position = (x1, y1 - 3 - label_height)
 
-                        cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), box_color, 2)
                         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
 
-                yield frame
+                        if frame_count % 30 == 0:
+                            save_frame_path = os.path.join(save_frames_folder, f'frame_{frame_count}.jpg')
+                            cv2.imwrite(save_frame_path, frame)
 
-                # cv2.imshow(window_name, frame)
+                            frame_height, frame_width, _ = frame.shape
+                            x_center = (x1 + x2) / 2 / frame_width
+                            y_center = (y1 + y2) / 2 / frame_height
+                            box_width = (x2 - x1) / frame_width
+                            box_height = (y2 - y1) / frame_height
+
+                            txt_file_path = os.path.join(save_labels_folder, f'frame_{frame_count}.txt')
+                            with open(txt_file_path, 'w') as txt_file:
+                                txt_file.write(f'{cls} {x_center} {y_center} {box_width} {box_height}\n')
+
+                        frame_count += 1
+
+                cv2.imshow(window_name, frame)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
+
             else:
                 break
 
