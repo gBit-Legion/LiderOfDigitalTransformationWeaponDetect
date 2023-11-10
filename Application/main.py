@@ -10,6 +10,7 @@ from fastapi import UploadFile
 from pathlib import Path
 
 from fastapi.routing import APIRoute
+from starlette.responses import StreamingResponse
 
 from Services.CodesForInteraction import *
 
@@ -37,6 +38,11 @@ app.add_middleware(
 @app.get("/static/{filename}")
 async def return_html_file(filename: str):
     return FileResponse(f"./Frontend/yolo/{filename}")
+
+
+@app.get("/serve/{camera_id}", include_in_schema=False)
+async def serve_video(camera_id: int):
+    return StreamingResponse()
 
 
 @app.post('/excel')
@@ -87,16 +93,7 @@ async def archive_upload(file: UploadFile):
             print(url)
             # print(os.listdir(os.path.join("./image", os.path.splitext(file)[0])))
             image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
-            #
-            # print(os.listdir(os.path.join(f"./image,{os.path.splitext(file)[0]}")))
-            # image_dirs = f"./image/{os.path.splitext(file)[0]}"
-            # print(image_dirs)
-            # image_dir = glob.glob(f"{image_dirs}/*.*")
-            # with os.scandir(image_dirs) as entries:
-            #     for entry in entries:
-            #         if entry.is_file():
-            #             image_dir = entry.name
-            # print(image_dir)
+            result_image = []
             if len(image_dir) != 0:
 
                 for image in image_dir:
@@ -132,6 +129,7 @@ def get_static_file(filename: str):
 
     # Определите путь к файлу на сервере FastAPI
     file_path = "./video/" + filename
+    print(file_path)
 
     return FileResponse(file_path)
 

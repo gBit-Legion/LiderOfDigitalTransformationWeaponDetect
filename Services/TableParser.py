@@ -23,7 +23,4 @@ class TableParser:
         return data
 
 
-# Пример использования
-# file_path = 'путь_к_файлу.xlsx'
-# table_parser = TableParser()
-# parsed_data = table_parser.parse_xlsx_file(file_path)
+

@@ -3,7 +3,7 @@ import shutil
 
 from Services.ArchiveFileExtractor import ZipFileExtractor
 from Services.YoloHandlers import VideoProcessor
-
+from Services.TableParser import *
 from Services.LablesMover import DatasetSpliter
 import os
 
@@ -24,14 +24,14 @@ def excel_parser(archive_path):
     zip_extractor = ZipFileExtractor(lables_zip_file_path)
     zip_extractor.extract_files(train_dataset_dir)
 
-    # ''' Разделение датасета на обучающую и тестовую выборки '''
-    # image_files = [f for f in os.listdir(source_dir + os.path.join('/images'))]
-    # image_files_train, image_files_val = train_test_split(image_files, test_size=0.15, random_state=42)
-    #
-    # spliter = DatasetSpliter(source_dir, val_dir)
-    # spliter.move_files(image_files_val)
-    ''' ------------------------------------------------------------- '''
 
+# ''' Разделение датасета на обучающую и тестовую выборки '''
+# image_files = [f for f in os.listdir(source_dir + os.path.join('/images'))]
+# image_files_train, image_files_val = train_test_split(image_files, test_size=0.15, random_state=42)
+#
+# spliter = DatasetSpliter(source_dir, val_dir)
+# spliter.move_files(image_files_val)
+''' ------------------------------------------------------------- '''
 
 ''' Код для получения видеофайлов из архива и их обработки '''
 
@@ -80,3 +80,9 @@ def unarchived(file_name):
 
 
 ''' ------------------------------------------------------ '''
+
+
+# Пример использования
+def excel_parser(file_path):
+    table_parser = TableParser()
+    parsed_data = table_parser.parse_xlsx_file(file_path)
