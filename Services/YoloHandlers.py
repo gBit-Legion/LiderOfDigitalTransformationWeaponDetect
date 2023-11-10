@@ -1,6 +1,8 @@
 import os
 import cv2
 import concurrent.futures
+
+import torch.cuda
 from ultralytics import YOLO
 
 model = YOLO("./ML_AI_NN/best.pt")
@@ -81,7 +83,10 @@ class VideoProcessor:
 
             if ret:
                 ''' Обработка моделью '''
-                result = model(frame)
+                if torch.cuda.is_available():
+                    result = model(frame, device=0)
+                else:
+                    result = model(frame)
 
                 for result_item in result:
                     boxes = result_item.boxes.cpu().numpy()
