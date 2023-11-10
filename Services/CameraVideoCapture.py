@@ -66,7 +66,7 @@ class RTSPCamera:
 
                 yield frame
 
-                cv2.imshow(window_name, frame)
+                # cv2.imshow(window_name, frame)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
