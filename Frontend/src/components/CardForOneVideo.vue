@@ -9,6 +9,7 @@
       class="text-idealDarkGray flex justify-center text-center text-xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide">
       Выбранные изображения: {{ train_dataset }}
     </p>
+    <Button/>
     <div class="grid-cols-1 sm:grid md:grid-cols-2 ">
 
       <div v-for="(el, index) in url_list" :key="index"
@@ -22,6 +23,7 @@
           </h5>
           <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
             Некоторая инфа
+  
           </p>
         </div>
         <button @click="card_isOpen = !card_isOpen, choosed_card = el"
@@ -53,9 +55,10 @@
 </template>
 
 <script>
+import Button from './Button.vue'
 import { mapGetters } from 'vuex'
 export default {
-
+ components: {Button},
   mounted() {
     this.video_list
   },
