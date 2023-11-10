@@ -39,7 +39,9 @@ async def return_html_file(filename: str):
 async def serve_video(camera_id: int):
     return StreamingResponse()
 
-
+@app.post()
+def get_list_cheked_file()
+    return "good"
 @app.post('/excel')
 async def file_uploader(file: UploadFile):
     if not os.path.exists("./upload"):
@@ -93,13 +95,24 @@ async def archive_upload(file: UploadFile):
             result_image = []
 
             img_list = []
+            label_list = []
             if len(image_dir) != 0:
 
                 for image, label in image_dir, labels_dir:
-
+                    with open(label, 'r') as file:
+                        for line in file:
+                            first_part = line.split(' ', 1)[0]
+                            if first_part == '0':
+                                label_list.append("knife")
+                            elif first_part == '1':
+                                label_list.append("pistol")
+                            elif first_part == '2':
+                                label_list.append("gun")
+                            elif first_part == '3':
+                                label_list.append("riffle")
                     result_image = {"image_name": os.path.splitext(image)[0],
                                     "image_url": f"/processed_image/{os.path.splitext(file)[0]}/{image}",
-                                    "class_name": "riffle"
+                                    "class_name": label_list
                                     }
                     # result_list.append({"url": url, "image": result_image})
                     img_list.append(result_image)
