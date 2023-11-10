@@ -73,4 +73,5 @@ def calculate_distance(message, photo_latitude, photo_longitude):
 
 
 # Прослушивание новых сообщений
-#bot.polling(none_stop=True)
+
+bot.polling(none_stop=True)

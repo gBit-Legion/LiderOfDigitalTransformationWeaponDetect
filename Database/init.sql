@@ -15,18 +15,3 @@
       longitude VARCHAR(255) NULL,
       physical_address VARCHAR(255) NULL
     );
-
-    -- Создание второй таблицы
-    CREATE TABLE dataset_db (
-      id SERIAL PRIMARY KEY,
-      full_file_path VARCHAR(255),
-      labels_path VARCHAR(255)
-    );
-
-    -- Создание третьей таблицы
-    CREATE TABLE employee_db (
-      id SERIAL PRIMARY KEY,
-      FIO VARCHAR(255),
-      day_password VARCHAR(255),
-      UNIQUE (id)
-    );

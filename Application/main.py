@@ -1,6 +1,6 @@
-import glob
+
 import json
-import os
+from multiprocessing import Process
 
 import uvicorn
 from fastapi.staticfiles import StaticFiles
@@ -11,9 +11,10 @@ from fastapi import UploadFile
 from pathlib import Path
 
 from fastapi.routing import APIRoute
+from starlette.responses import StreamingResponse
 
+from Services import TgBotKeeper
 from Services.CodesForInteraction import *
-from Services.TgBotKeeper import *
 
 app = FastAPI()
 
@@ -29,14 +30,14 @@ app.add_middleware(
 )
 
 
-# Запуск процесса для обработки файла
-# p = Process(target=bot_start)
-# p.start()
-# p.join()
-
 @app.get("/static/{filename}")
 async def return_html_file(filename: str):
     return FileResponse(f"./Frontend/yolo/{filename}")
+
+
+@app.get("/serve/{camera_id}", include_in_schema=False)
+async def serve_video(camera_id: int):
+    return StreamingResponse()
 
 
 @app.post('/excel')
@@ -88,6 +89,7 @@ async def archive_upload(file: UploadFile):
             url = f"/processed_video/{file}"
             print(url)
             image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
+            result_image = []
 
             img_list = []
             if len(image_dir) != 0:
@@ -130,6 +132,7 @@ def get_static_file(filename: str):
 
     # Определите путь к файлу на сервере FastAPI
     file_path = "./video/" + filename
+    print(file_path)
 
     return FileResponse(file_path)
 
@@ -152,3 +155,4 @@ def get_static_image(filename: str, video_name: str):
 
 
 app.include_router(static_router)
+

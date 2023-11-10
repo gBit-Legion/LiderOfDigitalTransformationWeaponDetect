@@ -3,8 +3,7 @@ import cv2
 import concurrent.futures
 from ultralytics import YOLO
 
-model = YOLO('./ML_AI_NN/best.pt')
-
+model = YOLO("./ML_AI_NN/best.pt")
 class_colors = \
     {
         0: (255, 0, 0),
