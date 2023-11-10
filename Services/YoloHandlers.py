@@ -2,6 +2,7 @@ import os
 import cv2
 import concurrent.futures
 from ultralytics import YOLO
+# import torch
 
 model = YOLO("./ML_AI_NN/best.pt")
 class_colors = \
@@ -81,7 +82,10 @@ class VideoProcessor:
 
             if ret:
                 ''' Обработка моделью '''
-                result = model(frame)
+                # if torch.cuda.is_available:
+                #     result = model(frame, device=0)
+                # else:
+                result = model(frame, conf=0.3)
 
                 for result_item in result:
                     boxes = result_item.boxes.cpu().numpy()
@@ -90,7 +94,9 @@ class VideoProcessor:
                         r = box.xyxy[0].astype(int)
                         cls = box.cls[0].astype(int)
 
-                        label = class_labels[cls]
+                        conf = round(box.conf[0].astype(float), 2)
+
+                        label = class_labels[cls] + str(conf)
                         box_color = class_colors.get(cls, (255, 255, 255))
 
                         (label_width, label_height), _ = cv2.getTextSize(label, class_font, class_font_scale, 1)
@@ -99,8 +105,7 @@ class VideoProcessor:
                         cv2.rectangle(frame, (r[0], r[1]), (r[2], r[3]), box_color, 2)
                         cv2.putText(frame, label, text_position, class_font, class_font_scale, box_color, 2)
 
-                        if frame_count % 60 == 0:  # Сохранение только каждого 60-го фрейма в папку
-
+                        if frame_count % 30 == 0:  # Сохранение только каждого 30-го фрейма в папку
 
                             save_frame_path = os.path.join(save_frames_folder, f'{os.path.splitext(self.video_file)[0]}_frame_{frame_count}.jpg')
                             cv2.imwrite(save_frame_path, frame)
