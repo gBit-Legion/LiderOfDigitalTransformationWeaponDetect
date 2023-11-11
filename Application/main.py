@@ -40,6 +40,8 @@ async def return_html_file(filename: str):
 
 stop_stream = False
 
+stop_stream = False
+
 
 @app.get("/stop_stream")
 async def stop_stream_endpoint():
@@ -50,7 +52,7 @@ async def stop_stream_endpoint():
 
 @app.get("/serve/{camera_id}")
 async def serve_video(camera_id: int):
-    url = ['rtsp://admin:A1234567@188.170.176.190:8025  /Streaming/Channels/101?transportmode=unicast&profile=Profile_1']
+    url = "rtsp://admin:A1234567@188.170.176.190:8025 /Streaming/Channels/101?transportmode=unicast&profile=Profile_1"
     video_processor = RTSPCamera(url, "./labels", "./image")
     global stop_stream
     stop_stream = False
@@ -59,11 +61,14 @@ async def serve_video(camera_id: int):
         while not stop_stream:
             for frame in video_processor.process_videos():
                 frame_np = np.array(next(frame)).astype(np.uint8)
-
                 _, jpg_frame = cv2.imencode(".jpg", frame_np)
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + jpg_frame.tobytes() + b'\r\n')
-    return StreamingResponse(generate_frames(), media_type='multipart/x-mixed-replace; boundary=frame')
+                yield jpg_frame.tobytes()
+
+    headers = {
+        'Content-Type': 'image/jpeg'
+    }
+
+    return StreamingResponse(generate_frames(), headers=headers)
 
 
 @app.post("/getlist")
