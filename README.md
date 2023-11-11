@@ -30,8 +30,8 @@ pip install -r requirements.txt
 #### Настройка веб-интерфейса
 
 В папке _**frontend**_ создайте два файла для подключения клиентской части к серверной:
-* .env
-* .env.production
+* _**.env**_
+* _**.env.production**_
 
 #### Запуск
 
