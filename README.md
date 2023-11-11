@@ -1,4 +1,4 @@
-# Система видеодетекции вооруженных людей
+![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/6d0f6ffc-18e6-43dc-8159-94381b82128c)# Система видеодетекции вооруженных людей
 
 <p align="center">
   <img src="https://avatars.mds.yandex.net/get-altay/5579175/2a0000017d6eab64658e6cb31041835f463f/XXL" width="300">
@@ -72,14 +72,11 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 ### 💻 Веб-страница
 
-
-
-| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ccc22320-1944-457c-97c6-94b782bcf048) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/f4dbef9a-0733-493e-9bd9-3317ec506b3b) |
+| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ccc22320-1944-457c-97c6-94b782bcf048) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ffc00bb9-9282-4e15-9a14-292378782454) |
 | ----------- | ----------- |
-| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ffc00bb9-9282-4e15-9a14-292378782454) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/83fead27-3afa-4a9e-a639-17b35b6906f1) |
-
-[ ... ]
+| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/f4dbef9a-0733-493e-9bd9-3317ec506b3b) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/83fead27-3afa-4a9e-a639-17b35b6906f1) |
 
 ### 📣 Система оповещения Telegram Bot
 
-[ ... ]
+| Заголовок 1 | Заголовок 2 | Картинка |
+| ----------- | ----------- | -------- |
