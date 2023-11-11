@@ -72,10 +72,8 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 ### 💻 Веб-страница
 
-| Заголовок 1 | Заголовок 2 |
-| ----------- | ----------- |
-| Содержимое 1 | Содержимое 2 |
-| Содержимое 3 | Содержимое 4 |
+| https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/blob/main/Downloading%20a%20video%20archive.jpg | https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/blob/main/Freeze%20frames%20from%20the%20video.jpg |
+| https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/blob/main/Loading%20a%20list%20of%20cameras.jpg | https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/blob/main/Auto-markup%20page.jpg |
 
 [ ... ]
 
