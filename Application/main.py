@@ -86,6 +86,12 @@ class RTSPCamera:
             ret, frame = capture.read()
 
             if ret:
+
+                if torch.cuda.is_available():
+                    result = model(frame, device=0)
+                else:
+                    result = model(frame, conf=0.3)
+                
                 result = model(frame, conf=0.3)
 
                 for result_item in result[0]:
@@ -129,14 +135,15 @@ class RTSPCamera:
                 _, jpeg = cv2.imencode('.jpg', frame)
                 frame_bytes = jpeg.tobytes()
                 yield (b'--frame\r\n'
-                        b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
 
-    @app.get("/serve/{camera_id}")
-    async def get_video_stream(camera_id: int):
-        url = [
-            "rtsp://admin:A1234567@188.170.176.190:8025 /Streaming/Channels/101?transportmode=unicast&profile=Profile_1"]
-        camera = RTSPCamera(url, "./labels", "./images")
-        return StreamingResponse(camera.process_video(), media_type="multipart/x-mixed-replace; boundary=frame")
+
+@app.get("/serve/{camera_id}")
+async def get_video_stream(camera_id: int):
+    url = [
+        "rtsp://admin:A1234567@188.170.176.190:8025 /Streaming/Channels/101?transportmode=unicast&profile=Profile_1"]
+    camera = RTSPCamera(url, "./labels", "./images")
+    return StreamingResponse(camera.process_video(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 
 @app.post("/getlist")
