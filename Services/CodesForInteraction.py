@@ -1,5 +1,6 @@
 ''' Код для разделения сохраниения и разделения обучающей выборки '''
 import shutil
+from pathlib import Path
 
 from Services.ArchiveFileExtractor import ZipFileExtractor
 from Services.YoloHandlers import VideoProcessor
@@ -65,8 +66,8 @@ def unarchived(file_name):
 
     ''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
 
-    input_folder = './archive'
-    output_folder = './video'
+    input_folder = Path('./archive')
+    output_folder = Path('./video')
 
     processor = VideoProcessor(input_folder, output_folder, "./image", "./labels")
     processor.process_videos()

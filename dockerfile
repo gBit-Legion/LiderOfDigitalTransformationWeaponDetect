@@ -1,5 +1,5 @@
 
-FROM clarinpl/cuda-python
+FROM dongsky/pytorch-gpu:latest
 
 WORKDIR .
 

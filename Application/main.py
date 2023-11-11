@@ -191,30 +191,36 @@ async def archive_upload(file: UploadFile):
         unarchived(file_path)
         try:
             vid = Path("./video")
+            print(vid)
             if not os.path.exists(vid):
                 os.makedirs(vid)
 
             list_dir = os.listdir(vid)
+            print(list_dir)
 
         except Exception as e:
             return {"directory_video_is_empty": e.args}
 
         for file in list_dir:
-            # print(file)
+            print(file)
             url = f"/processed_video/{file}"
+            print(url)
             # print(url)
             lbl = Path("./labels")
+            print(lbl)
             if not os.path.exists(lbl):
                 os.makedirs(lbl)
 
             image_dir = os.listdir(os.path.join(img, os.path.splitext(file)[0]))
             labels_dir = os.listdir(os.path.join(lbl, os.path.splitext(file)[0]))
+            print(image_dir, "\n", labels_dir)
             result_image = []
             img_list = []
             label_list = []
 
             if len(image_dir) != 0:
                 for image, label in zip(image_dir, labels_dir):
+                    print(image, label)
                     with open(os.path.join((os.path.join(lbl, os.path.splitext(file)[0])), label), 'r') as file1:
                         for line in file1:
                             first_part = line.split(' ', 1)[0]
