@@ -39,6 +39,10 @@ VUE_APP_USER_IP_WITH_PORT = *Ваш_IP_адрес*:8080
 ```
 
 Откройте терминал в папке _**frontend**_, выполните команды:
+```
+npm install
+npm run serve
+```
 
 #### Запуск
 
