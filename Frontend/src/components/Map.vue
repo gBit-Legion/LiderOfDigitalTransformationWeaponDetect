@@ -7,22 +7,17 @@
         :markerId="item.id" :cluster-name="1" :icon="markerIconCAMERA" :balloon-template="balloonTemplateCamera(item)" />
      
     </yandex-map>
-    <div>
-    <video ref="videoPlayer" class="video-js"></video>
-  </div>
+    
   
   </div>
-  <div>
-    <div>
-    <img :src="video_url">
-  </div>
+  <div >
+    <img  :src="video_url">
   </div>
 </div>
 </template>
 
 <script>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+
 import { yandexMap, ymapMarker, loadYmap } from "vue-yandex-maps";
 import { mapActions, mapGetters } from 'vuex';
 
@@ -42,14 +37,18 @@ export default {
 
 
   },
+  
 mounted() {
-  this.initVideoPlayer();
-    const settings = {
-      ...this.settings
-    };
+  
   },
   data() {
     return {
+      player: null,
+      playerOptions: {
+        autoplay: true,
+        controls: true,
+        fluid: true,
+      },
       video_url: `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
       camera_list: [
         {
@@ -137,21 +136,6 @@ mounted() {
     };
   },
   methods: {
-    initVideoPlayer() {
-      const options = {
-        controls: true,
-        autoplay: true,
-        fluid: true,
-        sources: [{
-          src: `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
-          type: 'multipart/byteranges'
-        }]
-      };
-      
-      const player = videojs(this.$refs.videoPlayer, options, function() {
-        console.log('Video.js player is ready');
-      });
-    },
     ...mapActions(['GET_MYCOORDS']),
     balloonTemplateCamera(item) {
       return `
