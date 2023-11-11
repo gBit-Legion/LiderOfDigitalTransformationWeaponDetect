@@ -1,12 +1,9 @@
-import asyncio
 import json
-
 import os
 
 import cv2
-import numpy as np
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI, Request, routing
+from fastapi import FastAPI, Request, routing, WebSocket
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import UploadFile
@@ -32,43 +29,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/static/{filename}")
-async def return_html_file(filename: str):
-    return FileResponse(f"./Frontend/yolo/{filename}")
-
-
-stop_stream = False
-
 stop_stream = False
 
 
-@app.get("/stop_stream")
-async def stop_stream_endpoint():
-    global stop_stream
-    stop_stream = True
-    return {"message": "Stream stopped"}
+async def video_stream(websocket: WebSocket, rtsp_url: str):
+    await websocket.accept()
+
+    video_capture = cv2.VideoCapture(rtsp_url)
+
+    while True:
+        ret, frame = video_capture.read()
+
+        if not ret:
+            break
+
+        # Преобразуем кадр в формат JPEG
+        _, buffer = cv2.imencode('.jpg', frame)
+
+        # Преобразуем кадр в строку base64
+        frame_data = buffer.tobytes()
+
+        # Отправляем кадр на фронтенд
+        await websocket.send(frame_data)
+
+    video_capture.release()
 
 
-@app.get("/serve/{camera_id}")
-async def serve_video(camera_id: int):
-    url = "rtsp://admin:A1234567@188.170.176.190:8025 /Streaming/Channels/101?transportmode=unicast&profile=Profile_1"
-    video_processor = RTSPCamera(url, "./labels", "./image")
-    global stop_stream
-    stop_stream = False
-
-    async def generate_frames():
-        while not stop_stream:
-            for frame in video_processor.process_videos():
-                frame_np = np.array(next(frame)).astype(np.uint8)
-                _, jpg_frame = cv2.imencode(".jpg", frame_np)
-                yield jpg_frame.tobytes()
-
-    headers = {
-        'Content-Type': 'image/jpeg'
-    }
-
-    return StreamingResponse(generate_frames(), headers=headers)
+@app.websocket("//serve/{camera_id}")
+async def video_feed(websocket: WebSocket, camera_id: int):
+    rtsp_url = ["rtsp://admin:A1234567@188.170.176.190:8025 /Streaming/Channels/101?transportmode=unicast&profile=Profile_1"]
+    await video_stream(websocket, rtsp_url)
 
 
 @app.post("/getlist")
@@ -101,15 +91,17 @@ async def file_uploader(file: UploadFile):
 
 @app.post("/archive")
 async def archive_upload(file: UploadFile):
-    if not os.path.exists("./archive"):
-        os.makedirs("./archive")
+    arch = Path("./archive")
+    if not os.path.exists(arch):
+        os.makedirs(arch)
         print("Папка успешно создана!")
     else:
         print("Папка уже существует.")
-    if not os.path.exists("./image"):
-        os.makedirs("./image")
+        img = Path("./image")
+    if not os.path.exists(img):
+        os.makedirs(img)
 
-    file_path = Path("./archive", file.filename)
+    file_path = Path(arch, file.filename)
     print(file_path)
 
     result_list = []
@@ -119,7 +111,11 @@ async def archive_upload(file: UploadFile):
             f.write(file.file.read())
         unarchived(file_path)
         try:
-            list_dir = os.listdir("./video")
+            vid = Path("./video")
+            if not os.path.exists(vid):
+                os.makedirs(vid)
+
+            list_dir = os.listdir(vid)
 
         except Exception as e:
             return {"directory_video_is_empty": e.args}
@@ -128,15 +124,19 @@ async def archive_upload(file: UploadFile):
             # print(file)
             url = f"/processed_video/{file}"
             # print(url)
-            image_dir = os.listdir(f"./image/{os.path.splitext(file)[0]}")
-            labels_dir = os.listdir(f"./labels/{os.path.splitext(file)[0]}")
+            lbl = Path("./labels")
+            if not os.path.exists(lbl):
+                os.makedirs(lbl)
+
+            image_dir = os.listdir(os.path.join(img, os.path.splitext(file)[0]))
+            labels_dir = os.listdir(os.path.join(lbl, os.path.splitext(file)[0]))
             result_image = []
             img_list = []
             label_list = []
 
             if len(image_dir) != 0:
                 for image, label in zip(image_dir, labels_dir):
-                    with open(f'./labels/{os.path.splitext(file)[0]}/{label}', 'r') as file1:
+                    with open(os.path.join((os.path.join(lbl, os.path.splitext(file)[0])), label), 'r') as file1:
                         for line in file1:
                             first_part = line.split(' ', 1)[0]
                             if first_part == '0':
@@ -179,14 +179,15 @@ static_router = routing.APIRouter(route_class=APIRoute)
 
 @static_router.get("/processed_video/{filename}")
 def get_static_file(filename: str):
-    if not os.path.exists("./video"):
-        os.makedirs("./video")
+    vid = Path("./video")
+    if not os.path.exists(vid):
+        os.makedirs(vid)
         print("Папка успешно создана!")
     else:
         print("Папка уже существует.")
 
     # Определите путь к файлу на сервере FastAPI
-    file_path = "./video/" + filename
+    file_path = os.path.join(vid, filename)
     print(file_path)
 
     return FileResponse(file_path)
@@ -197,14 +198,15 @@ app.include_router(static_router)
 
 @static_router.get("/processed_image/{video_name}/{filename}")
 def get_static_image(filename: str, video_name: str):
-    if not os.path.exists("./image"):
-        os.makedirs("./image")
+    img = Path("./image")
+    if not os.path.exists(img):
+        os.makedirs(img)
         print("Папка успешно создана!")
     else:
         print("Папка уже существует.")
 
     # Определите путь к файлу на сервере FastAPI
-    file_path = f"./image/{video_name}/" + filename
+    file_path = os.path.join(os.path.join(video_name), filename)
 
     return FileResponse(file_path)
 
