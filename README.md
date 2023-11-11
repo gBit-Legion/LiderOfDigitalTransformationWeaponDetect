@@ -34,3 +34,5 @@ pip install -r requirements.txt
 ```
 uvicorn Application.main:app --host='IP_адрес_хоста' --port=8000
 ```
+
+## Поддерживаемые функции
