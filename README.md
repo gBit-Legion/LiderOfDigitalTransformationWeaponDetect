@@ -78,5 +78,5 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 ### 📣 Система оповещения Telegram Bot
 
-| Заголовок 1 | Заголовок 2 | Картинка |
-| ----------- | ----------- | -------- |
+| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/5f17286a-b5c4-4de7-b397-c90c1811f70f) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/eeca1fae-98f7-47b9-962e-883f46dd3d00) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/60ee9093-846d-44c3-8990-7c91d0704064) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/e0fda414-bb71-4723-b3d8-e6a64e945451) |
+| ----------- | ----------- | ----------- | ----------- |
