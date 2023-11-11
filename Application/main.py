@@ -1,10 +1,13 @@
 import asyncio
 import json
+
 import os
 
+import cv2
+import numpy as np
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, routing
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import UploadFile
 from pathlib import Path
@@ -35,23 +38,32 @@ async def return_html_file(filename: str):
     return FileResponse(f"./Frontend/yolo/{filename}")
 
 
+stop_stream = False
+
+
+@app.get("/stop_stream")
+async def stop_stream_endpoint():
+    global stop_stream
+    stop_stream = True
+    return {"message": "Stream stopped"}
+
+
 @app.get("/serve/{camera_id}")
 async def serve_video(camera_id: int):
-    url = ['rtsp://26.114.135.146:8554/streaming']
-    rtsp_camera = RTSPCamera(url)
+    url = ['rtsp://admin:A1234567@188.170.176.190:8025  /Streaming/Channels/101?transportmode=unicast&profile=Profile_1']
+    video_processor = RTSPCamera(url, "./labels", "./image")
+    global stop_stream
+    stop_stream = False
 
-    async def video_stream():
-        while True:
-            frame = rtsp_camera.process_videos()
+    async def generate_frames():
+        while not stop_stream:
+            for frame in video_processor.process_videos():
+                frame_np = np.array(next(frame)).astype(np.uint8)
 
-            if frame is not None:
-                # Преобразуйте кадр в байты
-                frame_bytes = frame.tobytes()
+                _, jpg_frame = cv2.imencode(".jpg", frame_np)
                 yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
-
-    # Создайте стрим-ответ с использованием функции video_stream в качестве генератора данных
-    return StreamingResponse(video_stream(), media_type="multipart/x-mixed-replace; boundary=frame")
+                       b'Content-Type: image/jpeg\r\n\r\n' + jpg_frame.tobytes() + b'\r\n')
+    return StreamingResponse(generate_frames(), media_type='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.post("/getlist")

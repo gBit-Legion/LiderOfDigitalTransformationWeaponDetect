@@ -16,7 +16,7 @@ class TableParser:
         """ Указатель на начало таблицы """
         rows = sheet.iter_rows(values_only=True)
         """ Пропускаем первую строку """
-        next(rows)
+        # next(rows)
         """ Собираем данные со строк """
         for row in rows:
             self.data.append(list(row))

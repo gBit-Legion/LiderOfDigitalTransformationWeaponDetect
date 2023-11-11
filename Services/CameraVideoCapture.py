@@ -1,3 +1,5 @@
+import numpy as np
+
 from Services.yolo_connet import *
 import concurrent.futures
 
@@ -94,15 +96,15 @@ class RTSPCamera:
                 break
 
         capture.release()
-
-# rtsp_links = ['rtsp://admin:A1234567@188.170.176.190:8031/Streaming/Channels/101?transportmode=unicast&profile=Profile_1',
+#
+# rtsp_links = ['rtsp://admin:A1234567@188.170.176.190:8025/Streaming/Channels/101?transportmode=unicast&profile=Profile_1',
 #               'rtsp://26.114.135.146:8554/streaming']
-
-# video_processor = RTSPCamera(rtsp_links, save_labels_folder, save_frames_folder)
+#
+# video_processor = RTSPCamera(rtsp_links, "./labels", "./image")
 #
 # while True:
 #     for frame in video_processor.process_videos():
-#         frame_np = np.array(next(frame)).astype(np.uint8)
+#         frame_np = np.fromstring(frame, np.uint8)
 #
 #         cv2.imshow("Frame", frame_np)
 #         if cv2.waitKey(1) & 0xFF == ord('q'):
