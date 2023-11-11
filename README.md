@@ -21,6 +21,8 @@
 
 Перейдите в директорию со скаченным проектом, откройте терминал и введите следующие команды:
 
-python -m venv ven
-\venv\Scripts\activate 
+```
+python -m venv venv
+\venv\Scripts\activate
 pip install -r requirements.txt
+```
