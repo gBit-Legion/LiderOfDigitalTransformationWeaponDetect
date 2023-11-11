@@ -86,6 +86,12 @@ class RTSPCamera:
             ret, frame = capture.read()
 
             if ret:
+
+                if torch.cuda.is_available():
+                    result = model(frame, device=0)
+                else:
+                    result = model(frame, conf=0.3)
+                
                 result = model(frame, conf=0.3)
 
                 for result_item in result[0]:

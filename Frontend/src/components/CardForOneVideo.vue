@@ -9,7 +9,6 @@
       class="text-idealDarkGray flex justify-center text-center text-xl font-TT_Firs_Neue_Bold font-black h-auto pt-12 tracking-wide">
       Выбранные изображения: {{ train_dataset }}
     </p>
-    <Button :label="Отправить"> </Button>
     <div class="grid-cols-1 sm:grid md:grid-cols-2 ">
 
       <div v-for="(el, index) in url_list" :key="index"
