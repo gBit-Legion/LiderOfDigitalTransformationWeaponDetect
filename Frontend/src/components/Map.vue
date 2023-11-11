@@ -7,11 +7,6 @@
         :markerId="item.id" :cluster-name="1" :icon="markerIconCAMERA" :balloon-template="balloonTemplateCamera(item)" />
      
     </yandex-map>
-    
-  
-  </div>
-  <div >
-    <img  :src="video_url">
   </div>
 </div>
 </template>
@@ -39,7 +34,6 @@ export default {
   },
   
 mounted() {
-  
   },
   data() {
     return {
@@ -56,7 +50,7 @@ mounted() {
           latitude: 54.84,
           longitude: 39.84,
           name: `Камера наблюдения`,
-          address: 'Можайка',
+          address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
@@ -64,7 +58,7 @@ mounted() {
           latitude: 54.85,
           longitude: 39.85,
           name: `Камера наблюдения`,
-          address: 'Можайка',
+          address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
@@ -72,7 +66,7 @@ mounted() {
           latitude: 54.82896654088406,
           longitude: 39.831893822753904,
           name: `Камера наблюдения`,
-          address: 'Можайка',
+          address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         }
       ],
@@ -81,7 +75,7 @@ mounted() {
           id: 1,
           latitude: 54.83,
           longitude: 39.832,
-          name: `Толмас`,
+          name: `Имя`,
           phone: '+7(999)232-23-42',
         }
       ],
@@ -136,26 +130,20 @@ mounted() {
     };
   },
   methods: {
+   
     ...mapActions(['GET_MYCOORDS']),
     balloonTemplateCamera(item) {
       return `
     <h1 class="text-idealBlue text-xl font-bold font-TT_Firs_Neue_Regular">${item.name
         }</h1>
        <div>
-    <img scr="${item.video_url}">
+    <img src="${item.video_url}">
   </div>
     <a class="font-semibold font-TT_Firs_Neue_Regular text-base">Адрес: ${item.address
         }</a>
   `;
     },
-    balloonTemplatePolice(item) {
-      return `
-    <h1 class="text-idealBlue text-xl font-bold font-TT_Firs_Neue_Regular">${item.name
-        }</h1>
-    <a class="font-semibold font-TT_Firs_Neue_Regular text-base">Номер телефона: ${item.phone
-        }</a>
-  `;
-    }
+    
 
   },
 
