@@ -74,8 +74,7 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 
 
-| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ccc22320-1944-457c-97c6-94b782bcf048) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/e4d6eb93-589a-48c8-98c2-b5bbfb49efa5)
- |
+| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ccc22320-1944-457c-97c6-94b782bcf048) | уу |
 | ----------- | ----------- |
 | Содержимое 1 | Содержимое 2 |
 | Содержимое 3 | Содержимое 4 |
