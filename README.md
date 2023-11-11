@@ -33,12 +33,16 @@ pip install -r requirements.txt
 * _**.env**_
 * _**.env.production**_
 
+В этих файлах необходимо прописать IP-адрес серверной части приложения в формате:
+```
+VUE_APP_USER_IP_WITH_PORT = *Ваш_IP_адрес*:8080
+```
 #### Запуск
 
 В корневой директории проекта в терминале введите команду:
 
 ```
-uvicorn Application.main:app --host='IP_адрес_хоста' --port=8000
+uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 ```
 
 ## Поддерживаемые функции
