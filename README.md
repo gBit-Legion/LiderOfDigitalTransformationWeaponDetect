@@ -62,15 +62,17 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 ## Особенности
 
-* Был собран датасет, который содержит 40.521 экземпляра фотографий вооруженных лиц
+* **Был собран датасет, который содержит 40.521 экземпляра фотографий вооруженных лиц**
 
 | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/a411de26-6219-41d7-8fb9-af9243f7c979) | 
 | ----------- |
 
-* Матрица распределения ошибок
+* **Матрица распределения ошибок**
 
 | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/a3ab4589-0091-4b84-ab56-423cf30b1f8c) | 
 | ----------- |
+
+* **Графики обучения**
 
 | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/475bd172-0bf6-4c88-98ba-9020f66c6483) | ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/4c69c352-f883-42f3-9b4e-19f5e3f50acf) |
 | ----------- | ----------- |
