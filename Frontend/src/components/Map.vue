@@ -5,8 +5,7 @@
       :settings="settings" :zoom="5" :cluster-options="clusterOptions">
       <ymap-marker v-for="item in camera_list" :key="item.id" :coords="[item.latitude, item.longitude]"
         :markerId="item.id" :cluster-name="1" :icon="markerIconCAMERA" :balloon-template="balloonTemplateCamera(item)" />
-      <ymap-marker v-for="item in police_list" :key="item.id" :coords="[item.latitude, item.longitude]"
-        :markerId="item.id" :cluster-name="1" :icon="markerIconPOLICE" :balloon-template="balloonTemplatePolice(item)" />
+     
     </yandex-map>
     <div>
     <video ref="videoPlayer" class="video-js"></video>
@@ -59,6 +58,7 @@ mounted() {
           longitude: 39.84,
           name: `Камера наблюдения`,
           address: 'Можайка',
+          video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
           id: 2,
@@ -66,6 +66,7 @@ mounted() {
           longitude: 39.85,
           name: `Камера наблюдения`,
           address: 'Можайка',
+          video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
           id: 3,
@@ -73,6 +74,7 @@ mounted() {
           longitude: 39.831893822753904,
           name: `Камера наблюдения`,
           address: 'Можайка',
+          video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         }
       ],
       police_list: [
@@ -142,7 +144,7 @@ mounted() {
         fluid: true,
         sources: [{
           src: `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
-          type: 'video/mp4'
+          type: 'multipart/byteranges'
         }]
       };
       
@@ -155,8 +157,9 @@ mounted() {
       return `
     <h1 class="text-idealBlue text-xl font-bold font-TT_Firs_Neue_Regular">${item.name
         }</h1>
-        <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-</iframe>
+       <div>
+    <img scr="${item.video_url}">
+  </div>
     <a class="font-semibold font-TT_Firs_Neue_Regular text-base">Адрес: ${item.address
         }</a>
   `;
