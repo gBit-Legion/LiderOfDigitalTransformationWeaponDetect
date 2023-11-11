@@ -74,7 +74,8 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 
 | https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/blob/main/Downloading%20a%20video%20archive.jpg | Заголовок 2 |
 | ----------- | ----------- |
-| Содержимое 1 | Содержимое 2 |
+| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/ccc22320-1944-457c-97c6-94b782bcf048)
+ | Содержимое 2 |
 | Содержимое 3 | Содержимое 4 |
 | Содержимое 5 | Содержимое 6 |
 
