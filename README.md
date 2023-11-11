@@ -1,4 +1,4 @@
-![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/6d0f6ffc-18e6-43dc-8159-94381b82128c)# Система видеодетекции вооруженных людей
+# Система видеодетекции вооруженных людей
 
 <p align="center">
   <img src="https://avatars.mds.yandex.net/get-altay/5579175/2a0000017d6eab64658e6cb31041835f463f/XXL" width="300">
