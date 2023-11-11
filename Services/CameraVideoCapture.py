@@ -13,6 +13,7 @@ class RTSPCamera:
         self.save_frames_folder = save_frames_folder
 
     def process_videos(self):
+
         if not os.path.exists(self.save_frames_folder):
             os.makedirs(self.save_frames_folder)
         if not os.path.exists(self.save_labels_folder):
@@ -21,9 +22,11 @@ class RTSPCamera:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
             for index, rtsp_link in enumerate(self.rtsp_links):
+                print(index)
                 save_frames_folder = os.path.join(self.save_frames_folder, f'camera_{index + 1}')
                 save_labels_folder = os.path.join(self.save_labels_folder, f'camera_{index + 1}')
-                futures.append(executor.submit(self.process_video, rtsp_link, index, save_frames_folder,
+                print(rtsp_link)
+                futures.append(executor.submit(self.process_video, rtsp_link, save_frames_folder,
                                                save_labels_folder))
 
             for future in concurrent.futures.as_completed(futures):
@@ -32,11 +35,10 @@ class RTSPCamera:
                 except Exception as e:
                     print(f"Error processing video: {e}")
 
-    def process_video(self, rtsp_link, index, save_frames_folder, save_labels_folder):
+    def process_video(self, rtsp_link, save_frames_folder, save_labels_folder):
         capture = cv2.VideoCapture(rtsp_link)
         capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
         capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-
         capture.set(cv2.CAP_PROP_POS_MSEC, 100)
 
         if not capture.isOpened():
