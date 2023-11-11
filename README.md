@@ -1,2 +1,2 @@
-# LiderOfDigitalTransformationWeaponDetect
+# СИСТЕМА ВИДЕОДЕТЕКЦИИ ВООРУЖЕННЫХ ЛЮДЕЙ
  
