@@ -8,17 +8,22 @@
       <ymap-marker v-for="item in police_list" :key="item.id" :coords="[item.latitude, item.longitude]"
         :markerId="item.id" :cluster-name="1" :icon="markerIconPOLICE" :balloon-template="balloonTemplatePolice(item)" />
     </yandex-map>
-    
+    <div>
+    <video ref="videoPlayer" class="video-js"></video>
+  </div>
+  
   </div>
   <div>
-    <video ref="videoPlayer" class="video-js"></video>
+    <div>
+    <img :src="video_url">
+  </div>
   </div>
 </div>
 </template>
 
 <script>
-import 'video.js/dist/video-js.css'
 import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 import { yandexMap, ymapMarker, loadYmap } from "vue-yandex-maps";
 import { mapActions, mapGetters } from 'vuex';
 
@@ -39,29 +44,14 @@ export default {
 
   },
 mounted() {
-  this.player = videojs(this.$refs.videoPlayer, this.Playeroptions, () => {
-      this.player.log('onPlayerReady', this);
-    });
-  },
-  beforeDestroy() {
-    if (this.player) {
-      this.player.dispose();
-    }
+  this.initVideoPlayer();
+    const settings = {
+      ...this.settings
+    };
   },
   data() {
     return {
-      Playeroptions: {
-        autoplay: true,
-        controls: true,
-        sources: [
-          {
-            src:
-            `ws://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
-              type: 'video/mp4'
-          }
-        ]
-      },
-      player: null,
+      video_url: `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
       camera_list: [
         {
           id: 1,
@@ -145,6 +135,21 @@ mounted() {
     };
   },
   methods: {
+    initVideoPlayer() {
+      const options = {
+        controls: true,
+        autoplay: true,
+        fluid: true,
+        sources: [{
+          src: `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`,
+          type: 'video/mp4'
+        }]
+      };
+      
+      const player = videojs(this.$refs.videoPlayer, options, function() {
+        console.log('Video.js player is ready');
+      });
+    },
     ...mapActions(['GET_MYCOORDS']),
     balloonTemplateCamera(item) {
       return `
