@@ -29,3 +29,8 @@ pip install -r requirements.txt
 
 #### Запуск
 
+В корневой директории проекта в терминале введите команду:
+
+```
+uvicorn Application.main:app --host=свой_адрес --port=8000
+```
