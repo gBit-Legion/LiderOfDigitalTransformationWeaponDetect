@@ -65,8 +65,8 @@ uvicorn Application.main:app --host=*IP_адрес_хоста* --port=8000
 * Был собран датасет, который содержит 40.521 экземпляра фотографий вооруженных лиц
 
 <p align="center">
-| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/a411de26-6219-41d7-8fb9-af9243f7c979) | 
-| ----------- |
+<| ![image](https://github.com/gBit-Legion/LiderOfDigitalTransformationWeaponDetect/assets/91145499/a411de26-6219-41d7-8fb9-af9243f7c979) | 
+| ----------- |>
 </p>
 
 ## 📄 Документация
