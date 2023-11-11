@@ -2,7 +2,7 @@
   <div>
   <div class="border-idealBlue border-[6px] rounded-lg shadow-cards">
     <yandex-map :coords="coords" :use-object-manager="true" :object-manager-clusterize="true"
-      :settings="settings" :zoom="5" :cluster-options="clusterOptions">
+      :settings="settings" :zoom="12" :cluster-options="clusterOptions">
       <ymap-marker v-for="item in camera_list" :key="item.id" :coords="[item.latitude, item.longitude]"
         :markerId="item.id" :cluster-name="1" :icon="markerIconCAMERA" :balloon-template="balloonTemplateCamera(item)" />
      
@@ -47,24 +47,24 @@ mounted() {
       camera_list: [
         {
           id: 1,
-          latitude: 54.84,
-          longitude: 39.84,
+          latitude: 59.957953,
+          longitude: 30.299006,
           name: `Камера наблюдения`,
           address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
           id: 2,
-          latitude: 54.85,
-          longitude: 39.85,
+          latitude: 59.98,
+          longitude: 30.299006,
           name: `Камера наблюдения`,
           address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
         },
         {
           id: 3,
-          latitude: 54.82896654088406,
-          longitude: 39.831893822753904,
+          latitude: 59.98,
+          longitude: 30.32,
           name: `Камера наблюдения`,
           address: 'Ваш адрес',
           video_url:  `http://${process.env.VUE_APP_USER_IP_WITHPORT}/serve/0`
@@ -96,7 +96,7 @@ mounted() {
         54.82896654088406,
         39.831893822753904
       ],
-      coords: [55.753215, 36.622504],
+      coords: [59.957953,30.299006 ],
       settings: settings,
       markerIconPOLICE: {
         layout: "default#imageWithContent",
