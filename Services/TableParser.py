@@ -15,7 +15,7 @@ class TableParser:
         sheet = workbook.active
         """ Указатель на начало таблицы """
         rows = sheet.iter_rows(values_only=True)
-        """ Пропускаем первую строку """
+        # """ Пропускаем первую строку """
         # next(rows)
         """ Собираем данные со строк """
         for row in rows:

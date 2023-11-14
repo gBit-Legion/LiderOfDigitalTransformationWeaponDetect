@@ -1,19 +1,16 @@
 ''' Код для разделения сохраниения и разделения обучающей выборки '''
+import os
 import shutil
 from pathlib import Path
 
 from Services.ArchiveFileExtractor import ZipFileExtractor
-from Services.YoloHandlers import VideoProcessor
 from Services.TableParser import *
-from Services.LablesMover import DatasetSpliter
-import os
-
-from sklearn.model_selection import train_test_split
+from Services.YoloHandlers import VideoProcessor
 
 
-def excel_parser(archive_path):
+def dataset_spliter(archive_path):
     ''' Путь к архиву с лейблами '''
-    lables_zip_file_path = 'C:/Users/mides/Downloads/bboxes_yolo.zip'
+    lables_zip_file_path = archive_path
     ''' Путь куда нужно переместить лейблы из архива '''
     train_dataset_dir = os.path.join('./dataset/train/labels')
 
@@ -52,11 +49,13 @@ def delete_tree(folder):
 def unarchived(file_name):
     zip_file_path = file_name
 
+    delete_tree("./labels")
     delete_tree("./video")
     delete_tree("./image")
 
-    extract_dir = './archive'
+    extract_dir = "./archive"
     print(extract_dir)
+    print(3)
 
     """ Создаем экземпляр класса ZipFileExtractor """
     zip_extractor = ZipFileExtractor(zip_file_path)
@@ -66,13 +65,14 @@ def unarchived(file_name):
 
     ''' Создание экземпляра VideoProcessor и обработка видео в указанной папке '''
 
-    input_folder = Path('./archive')
-    output_folder = Path('./video')
-
+    input_folder = './archive'
+    output_folder = './video'
+    print(13)
     processor = VideoProcessor(input_folder, output_folder, "./image", "./labels")
     processor.process_videos()
     if len(os.listdir("./archive")) != 0:
         for filename in os.listdir("./archive"):
+
             file_path = os.path.join("./archive/", filename)
             # Проверяем, является ли объект файлом
             if os.path.isfile(file_path):

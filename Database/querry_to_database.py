@@ -15,7 +15,7 @@ def add_in_dataset(file_path):
     list_id = []
     tp = TableParser(file_path)
     url_list = tp.parse_xlsx_file()
-    print(url_list)
+
     for url in url_list:
         address, lat, lon = address_generator()
         add_to_database = CameraObject(url=url, latitude=lat, longitude=lon, physical_address=address)
@@ -25,7 +25,6 @@ def add_in_dataset(file_path):
         print(record)
         list_id.append({record.id: record.url})
         print(list_id)
-
 
     session.close()
     return list_id

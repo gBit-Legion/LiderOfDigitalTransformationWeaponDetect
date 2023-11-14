@@ -1,11 +1,6 @@
 import os
-import cv2
 import concurrent.futures
 
-import torch.cuda
-from ultralytics import YOLO
-
-# import torch
 from Services.yolo_connet import *
 
 
@@ -64,7 +59,8 @@ class VideoProcessor:
             os.makedirs(save_labels_folder)
 
         ''' Создание объекта VideoWriter для записи нового видеофайла '''
-        fourcc = cv2.VideoWriter_fourcc(*'MP4T')
+        # Проблемы с кодеками при работе на линукс подобных системах пока что найден рабочий кодек *'MP4V'
+        fourcc = cv2.VideoWriter_fourcc(*'H264')
         out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
         frame_count = 0
 
@@ -120,12 +116,6 @@ class VideoProcessor:
                                 txt_file.write(f'{cls} {x_center} {y_center} {box_width} {box_height}\n')
 
                         frame_count += 1
-
-                # center_x = int(width / 2)
-                # center_y = int(height / 2)
-                #
-                # # Рисование красной точки в центре кадра
-                # cv2.circle(frame, (center_x, center_y), 5, (0, 0, 255), -1)
 
                 ''' Запись обработанного кадра в новый видеофайл '''
                 out.write(frame)

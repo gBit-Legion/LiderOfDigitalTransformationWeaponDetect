@@ -2,5 +2,6 @@
 .pytest_cache
 .venv
 .coverage
+.Image_for_document
 dockerfile
 README.md
