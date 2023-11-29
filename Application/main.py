@@ -23,9 +23,6 @@ app.mount("/static", StaticFiles(directory="./Frontend/yolo"), name='static')
 static_router = routing.APIRouter(route_class=APIRoute)
 static_router2 = routing.APIRouter(route_class=APIRoute)
 
-app.include_router(static_router)
-app.include_router(static_router2)
-
 origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
@@ -61,7 +58,7 @@ async def file_uploader(file: UploadFile):
     else:
         print("Папка уже существует.")
     print(file.filename)
-    file_path = Path("./upload", file.filename)
+    file_path = "./upload/" + file.filename
     print(file_path)
     try:
         with open(file_path, "wb") as f:
@@ -85,17 +82,20 @@ async def archive_upload(file: UploadFile):
         os.makedirs("./labels")
     if not os.path.exists("./video"):
         os.makedirs("./video")
-    # logging.INFO("Папки успешно созданы")
-    file_path = os.path.join("/archive", file.filename)
 
+    file_path = "./archive/" + file.filename
     result_list = []
     print(1)
     try:
+        print(file_path)
         with open(file_path, "wb") as f:
+            print(file.filename)
             f.write(file.file.read())
+            print(file_path)
         unarchived(file_path)
         try:
             list_dir = os.listdir("./video")
+            print(list_dir)
 
         except Exception as e:
             # logging.WARNING({e.args}, {os.listdir("./video")})
@@ -109,8 +109,8 @@ async def archive_upload(file: UploadFile):
             if not os.path.exists("./labels"):
                 os.makedirs("./labels")
 
-            image_dir = os.listdir(os.path.join("./image", os.path.splitext(file)[0]))
-            labels_dir = os.listdir(os.path.join("./labels", os.path.splitext(file)[0]))
+            image_dir = os.listdir("./image/" + os.path.splitext(file)[0])
+            labels_dir = os.listdir("./labels/" + os.path.splitext(file)[0])
 
             # logging.INFO(f"image directory: {image_dir}, labels director: {labels_dir}")
 
@@ -121,7 +121,7 @@ async def archive_upload(file: UploadFile):
             if len(image_dir) != 0:
                 for image, label in zip(image_dir, labels_dir):
 
-                    with open(os.path.join((os.path.join("./labels", os.path.splitext(file)[0])), label), 'r') as file1:
+                    with open(("./labels/" + os.path.splitext(file)[0]) + "/" + label, 'r') as file1:
 
                         for line in file1:
                             first_part = line.split(' ', 1)[0]
@@ -140,7 +140,7 @@ async def archive_upload(file: UploadFile):
                                     }
 
                     img_list.append(result_image)
-                    # logging.INFO(f"json part image list: {img_list}")
+
             else:
                 result_image = {
                     "image_name": "no_weapon_detected",
@@ -151,8 +151,7 @@ async def archive_upload(file: UploadFile):
                 img_list.append(result_image)
 
             result_list.append({"url": url, "images": img_list})
-
-            # logging.INFO(f"finally json: {result_list}")
+            print(result_list)
 
         return json.dumps(result_list)
     except Exception as e:
@@ -168,10 +167,13 @@ def get_static_file(filename: str):
         print("Папка уже существует.")
 
     # Определите путь к файлу на сервере FastAPI
-    file_path = os.path.join("./video", filename)
+    file_path = "./video/" + filename
     print(file_path)
 
     return FileResponse(file_path)
+
+
+app.include_router(static_router)
 
 
 @static_router2.get("/processed_image/{video_name}/{filename}")
@@ -180,6 +182,9 @@ def get_static_image(filename: str, video_name: str):
         os.makedirs("./image")
 
     # Определите путь к файлу на сервере FastAPI
-    file_path = os.path.join("./image", os.path.join(video_name, filename))
-
+    file_path = "./image/" + video_name + "/" + filename
+    print(file_path)
     return FileResponse(file_path)
+
+
+app.include_router(static_router2)

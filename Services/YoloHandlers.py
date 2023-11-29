@@ -60,7 +60,7 @@ class VideoProcessor:
 
         ''' Создание объекта VideoWriter для записи нового видеофайла '''
         # Проблемы с кодеками при работе на линукс подобных системах пока что найден рабочий кодек *'MP4V'
-        fourcc = cv2.VideoWriter_fourcc(*'H264')
+        fourcc = cv2.VideoWriter_fourcc(*'MP4T')
         out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
         frame_count = 0
 

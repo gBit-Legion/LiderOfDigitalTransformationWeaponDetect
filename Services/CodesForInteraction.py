@@ -36,7 +36,7 @@ def dataset_spliter(archive_path):
 
 def delete_tree(folder):
     for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
+        file_path = folder + "/" + filename
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
@@ -67,13 +67,13 @@ def unarchived(file_name):
 
     input_folder = './archive'
     output_folder = './video'
-    print(13)
+
     processor = VideoProcessor(input_folder, output_folder, "./image", "./labels")
     processor.process_videos()
     if len(os.listdir("./archive")) != 0:
         for filename in os.listdir("./archive"):
 
-            file_path = os.path.join("./archive/", filename)
+            file_path = "./archive/" + filename
             # Проверяем, является ли объект файлом
             if os.path.isfile(file_path):
                 # Удаляем файл
@@ -86,4 +86,4 @@ def unarchived(file_name):
 # Пример использования
 def excel_parser(file_path):
     table_parser = TableParser()
-    parsed_data = table_parser.parse_xlsx_file(file_path)
+    parsed_data = table_parser.parse_xlsx_file()
